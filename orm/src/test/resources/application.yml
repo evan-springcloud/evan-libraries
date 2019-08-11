@@ -1,0 +1,29 @@
+
+spring:
+  application:
+    name: evan-libraries-orm-test
+  datasource:
+    url: jdbc:mysql://116.62.114.198:3306/btbs_base?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: MiZhi001
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:   #下面为连接池的补充设置，应用到上面数据源中
+      max-lifetime: 1000
+      minimum-idle: 4
+      idle-timeout: 1000
+      maximum-pool-size: 32
+      connection-test-query: SELECT 1
+      connection-timeout: 2000
+
+logging:
+  pattern:
+    console: "%date{dd HH:mm:ss} %level [%thread] %msg。%-60caller{1}"
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: warn
+    org.springframework.boot.autoconfigure.logging: warn
+    java.sql.Statement: debug
+    java.sql.PreparedStatement: debug
+    java.sql.ResultSet: debug
+    org.springframework.jdbc.core: TRACE
+    org.evan.libraries: DEBUG
+    test.org.evan.libraries: DEBUG

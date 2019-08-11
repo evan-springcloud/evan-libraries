@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test.org.evan.libraries.orm.support.mapper.DemoMapper">
+    <resultMap id="demoMap" type="demo">
+        <id column="ID" property="id"/>
+        <result column="FIELD_REGION" property="fieldRegion"/>
+        <result column="IMAGE_PATH" property="imagePath"/>
+        <result column="FIELD_CHECKBOX" property="fieldCheckbox"/>
+        <result column="FIELD_PROVINCE" property="fieldProvince"/>
+        <result column="FIELD_DATETIME" property="fieldDatetime"/>
+        <result column="GMT_CREATE" property="gmtCreate"/>
+        <result column="IMAGE_PATH_LIST" property="imagePathList"/>
+        <result column="FIELD_HTMLEDITOR_CUT" property="fieldHtmleditorCut"/>
+        <result column="FIELD_RADIO" property="fieldRadio"/>
+        <result column="FIELD_NUMBER" property="fieldNumber"/>
+        <result column="FIELD_TEXTAREA" property="fieldTextarea"/>
+        <result column="FIELD_SELECT" property="fieldSelect"/>
+        <result column="GMT_MODIFY" property="gmtModify"/>
+        <result column="FIELD_TEXT" property="fieldText"/>
+        <result column="FIELD_DATE" property="fieldDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="FIELD_HTMLEDITOR" property="fieldHtmleditor"/>
+        <result column="FIELD_CITY" property="fieldCity"/>
+<!--        <collection property="demoChild1s" ofType="demoChild1">-->
+<!--            <id column=" demo_child1_ID" property="id"/>-->
+<!--            <result column="demo_ID" property="demoId"/>-->
+<!--            <result column=" demo_child1_GMT_MODIFY" property="gmtModify"/>-->
+<!--            <result column=" demo_child1_FIELD_TEXT" property="fieldText"/>-->
+<!--            <result column=" demo_child1_GMT_CREATE" property="gmtCreate"/>-->
+<!--            <result column=" demo_child1_STATUS" property="status"/>-->
+<!--        </collection>-->
+    </resultMap>
+
+    <insert id="insert" parameterType="demo" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" order="BEFORE" resultType="long" databaseId="oracle">
+            select
+            SEQ_demo.nextval from dual
+        </selectKey>
+        insert into
+        demo(
+        <if test="_databaseId == 'oracle'">ID,</if>
+        <trim prefix="" prefixOverrides=",">
+            <if test="fieldRegion != null">,FIELD_REGION</if>
+            <if test="imagePath != null">,IMAGE_PATH</if>
+            <if test="fieldCheckbox != null">,FIELD_CHECKBOX</if>
+            <if test="fieldProvince != null">,FIELD_PROVINCE</if>
+            <if test="fieldDatetime != null">,FIELD_DATETIME</if>
+            ,GMT_CREATE
+            <if test="imagePathList != null">,IMAGE_PATH_LIST</if>
+            <if test="fieldHtmleditorCut != null">,FIELD_HTMLEDITOR_CUT</if>
+            <if test="fieldRadio != null">,FIELD_RADIO</if>
+            <if test="fieldNumber != null">,FIELD_NUMBER</if>
+            <if test="fieldTextarea != null">,FIELD_TEXTAREA</if>
+            <if test="fieldSelect != null">,FIELD_SELECT</if>
+            ,GMT_MODIFY
+            <if test="fieldText != null">,FIELD_TEXT</if>
+            <if test="fieldDate != null">,FIELD_DATE</if>
+            <if test="status != null">,STATUS</if>
+            <if test="fieldHtmleditor != null">,FIELD_HTMLEDITOR</if>
+            <if test="fieldCity != null">,FIELD_CITY</if>
+        </trim>
+        )values(
+        <if test="_databaseId == 'oracle'">#{id},</if>
+        <trim prefix="" prefixOverrides=",">
+            <if test="fieldRegion != null">,#{fieldRegion,jdbcType=VARCHAR}</if>
+            <if test="imagePath != null">,#{imagePath,jdbcType=VARCHAR}</if>
+            <if test="fieldCheckbox != null">,#{fieldCheckbox,jdbcType=VARCHAR}</if>
+            <if test="fieldProvince != null">,#{fieldProvince,jdbcType=VARCHAR}</if>
+            <if test="fieldDatetime != null">,#{fieldDatetime,jdbcType=TIMESTAMP}</if>
+            ,
+            now()
+            <if test="imagePathList != null">,#{imagePathList,jdbcType=VARCHAR}</if>
+            <if test="fieldHtmleditorCut != null">,#{fieldHtmleditorCut,jdbcType=VARCHAR}</if>
+            <if test="fieldRadio != null">,#{fieldRadio,jdbcType=VARCHAR}</if>
+            <if test="fieldNumber != null">,#{fieldNumber,jdbcType=NUMERIC}</if>
+            <if test="fieldTextarea != null">,#{fieldTextarea,jdbcType=VARCHAR}</if>
+            <if test="fieldSelect != null">,#{fieldSelect,jdbcType=VARCHAR}</if>
+            ,
+            now()
+            <if test="fieldText != null">,#{fieldText,jdbcType=VARCHAR}</if>
+            <if test="fieldDate != null">,#{fieldDate,jdbcType=TIMESTAMP}</if>
+            <if test="status != null">,#{status,jdbcType=INTEGER}</if>
+            <if test="fieldHtmleditor != null">,#{fieldHtmleditor,jdbcType=VARCHAR}</if>
+            <if test="fieldCity != null">,#{fieldCity,jdbcType=VARCHAR}</if>
+        </trim>
+        )
+    </insert>
+
+    <update id="update" parameterType="demo">
+        update demo
+        <set>
+            <if test="fieldRegion != null">FIELD_REGION=#{fieldRegion,jdbcType=VARCHAR},</if>
+            <if test="imagePath != null">IMAGE_PATH=#{imagePath,jdbcType=VARCHAR},</if>
+            <if test="fieldCheckbox != null">FIELD_CHECKBOX=#{fieldCheckbox,jdbcType=VARCHAR},</if>
+            <if test="fieldProvince != null">FIELD_PROVINCE=#{fieldProvince,jdbcType=VARCHAR},</if>
+            <if test="fieldDatetime != null">FIELD_DATETIME=#{fieldDatetime,jdbcType=TIMESTAMP},</if>
+            <if test="gmtCreate != null">GMT_CREATE=#{gmtCreate,jdbcType=TIMESTAMP},</if>
+            <if test="imagePathList != null">IMAGE_PATH_LIST=#{imagePathList,jdbcType=VARCHAR},</if>
+            <if test="fieldHtmleditorCut != null">FIELD_HTMLEDITOR_CUT=#{fieldHtmleditorCut,jdbcType=VARCHAR},</if>
+            <if test="fieldRadio != null">FIELD_RADIO=#{fieldRadio,jdbcType=VARCHAR},</if>
+            <if test="fieldNumber != null">FIELD_NUMBER=#{fieldNumber,jdbcType=NUMERIC},</if>
+            <if test="fieldTextarea != null">FIELD_TEXTAREA=#{fieldTextarea,jdbcType=VARCHAR},</if>
+            <if test="fieldSelect != null">FIELD_SELECT=#{fieldSelect,jdbcType=VARCHAR},</if>
+            GMT_MODIFY=
+            now()
+            ,
+            <if test="fieldText != null">FIELD_TEXT=#{fieldText,jdbcType=VARCHAR},</if>
+            <if test="fieldDate != null">FIELD_DATE=#{fieldDate,jdbcType=TIMESTAMP},</if>
+            <if test="status != null">STATUS=#{status,jdbcType=INTEGER},</if>
+            <if test="fieldHtmleditor != null">FIELD_HTMLEDITOR=#{fieldHtmleditor,jdbcType=VARCHAR},</if>
+            <if test="fieldCity != null">FIELD_CITY=#{fieldCity,jdbcType=VARCHAR},</if>
+        </set>
+        where ID=#{id}
+    </update>
+
+    <select id="load" parameterType="long" resultMap="demoMap">
+        select * from demo where ID=#{id}
+    </select>
+
+    <sql id="queryCommonSql">
+        FROM demo d
+        <if test="joinDemoChild1">, demo_child1 demoChild1</if>
+        <where>
+            <if test="joinDemoChild1">d.ID=demoChild1.demo_ID</if>
+            <if test="idArray != null">
+                and d.ID in
+                <foreach collection="idArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
+            <if test="fieldRegion != null and fieldRegion.trim() !=''">and d.FIELD_REGION = #{fieldRegion}</if>
+            <if test="fieldProvince != null and fieldProvince.trim() !=''">and d.FIELD_PROVINCE = #{fieldProvince}</if>
+            <if test="fieldDatetimeFrom != null">and d.FIELD_DATETIME >= #{fieldDatetimeFrom}</if>
+            <if test="fieldDatetimeTo != null">
+                <choose>
+                    <when test="_databaseId == 'oracle'"><![CDATA[and d.GMT_MODIFY < #{fieldDatetimeTo} + 1]]></when>
+                    <when test="_databaseId == 'mysql'">
+                        <![CDATA[and d.GMT_MODIFY < date_add( #{fieldDatetimeTo}, interval 1 day)]]></when>
+                </choose>
+            </if>
+            <if test="gmtCreateFrom != null">and d.GMT_CREATE >= #{gmtCreateFrom}</if>
+            <if test="gmtCreateTo != null">
+                <choose>
+                    <when test="_databaseId == 'oracle'"><![CDATA[and d.GMT_MODIFY < #{gmtCreateTo} + 1]]></when>
+                    <when test="_databaseId == 'mysql'">
+                        <![CDATA[and d.GMT_MODIFY < date_add( #{gmtCreateTo}, interval 1 day)]]></when>
+                </choose>
+            </if>
+            <if test="fieldHtmleditorCut != null and fieldHtmleditorCut.trim() !=''">
+                and d.FIELD_HTMLEDITOR_CUT like
+                <choose>
+                    <when test="_databaseId=='oracle'">
+                        '%' || #{fieldHtmleditorCut} || '%'
+                    </when>
+                    <when test="_databaseId=='mysql'">
+                        CONCAT('%',#{fieldHtmleditorCut},'%')
+                    </when>
+                </choose>
+            </if>
+            <if test="fieldRadio != null and fieldRadio.trim() !=''">and d.FIELD_RADIO=#{fieldRadio}</if>
+            <if test="fieldNumberFrom != null">and d.FIELD_NUMBER >= #{fieldNumberFrom}</if>
+            <if test="fieldNumberTo != null"><![CDATA[and d.FIELD_NUMBER <= #{fieldNumberTo}]]></if>
+            <if test="fieldTextarea != null and fieldTextarea.trim() !=''">
+                and d.FIELD_TEXTAREA like
+                <choose>
+                    <when test="_databaseId=='oracle'">
+                        '%' || #{fieldTextarea} || '%'
+                    </when>
+                    <when test="_databaseId=='mysql'">
+                        CONCAT('%',#{fieldTextarea},'%')
+                    </when>
+                </choose>
+            </if>
+            <if test="fieldSelect != null ">and d.FIELD_SELECT=#{fieldSelect}</if>
+            <if test="gmtModifyFrom != null">and d.GMT_MODIFY >= #{gmtModifyFrom}</if>
+            <if test="gmtModifyTo != null">
+                <choose>
+                    <when test="_databaseId == 'oracle'"><![CDATA[and d.GMT_MODIFY < #{gmtModifyTo} + 1]]></when>
+                    <when test="_databaseId == 'mysql'">
+                        <![CDATA[and d.GMT_MODIFY < date_add( #{gmtModifyTo}, interval 1 day)]]></when>
+                </choose>
+            </if>
+            <if test="fieldText != null and fieldText.trim() !=''">
+                and d.FIELD_TEXT like
+                <choose>
+                    <when test="_databaseId=='oracle'">
+                        '%' || #{fieldText} || '%'
+                    </when>
+                    <when test="_databaseId=='mysql'">
+                        CONCAT('%',#{fieldText},'%')
+                    </when>
+                </choose>
+            </if>
+            <if test="fieldDateFrom != null">and d.FIELD_DATE >= #{fieldDateFrom}</if>
+            <if test="fieldDateTo != null">
+                <choose>
+                    <when test="_databaseId == 'oracle'"><![CDATA[and d.GMT_MODIFY < #{fieldDateTo} + 1]]></when>
+                    <when test="_databaseId == 'mysql'">
+                        <![CDATA[and d.GMT_MODIFY < date_add( #{fieldDateTo}, interval 1 day)]]></when>
+                </choose>
+            </if>
+            <choose>
+                <when test="status != null">and d.STATUS = #{status}</when>
+                <when test="statusArray != null and statusArray.length > 0">
+                    and d.STATUS in
+                    <foreach collection="statusArray" index="index" item="item" open="(" separator=","
+                             close=")">#{item}
+                    </foreach>
+                </when>
+                <otherwise>
+                    <if test="!includeDeleted">
+                        and d.STATUS > 0
+                    </if>
+                </otherwise>
+            </choose>
+            <if test="fieldHtmleditor != null and fieldHtmleditor.trim() !=''">
+                and d.FIELD_HTMLEDITOR like
+                <choose>
+                    <when test="_databaseId=='oracle'">
+                        '%' || #{fieldHtmleditor} || '%'
+                    </when>
+                    <when test="_databaseId=='mysql'">
+                        CONCAT('%',#{fieldHtmleditor},'%')
+                    </when>
+                </choose>
+            </if>
+            <if test="fieldCity != null and fieldCity.trim() !=''">and d.FIELD_CITY = #{fieldCity}</if>
+        </where>
+    </sql>
+
+    <sql id="sortSql">
+        <choose>
+            <when test="sort != null and sort.trim() !=''">
+                order by ${sort}
+            </when>
+            <otherwise>
+                <if test="sortByDefault">
+                    order by d.GMT_CREATE DESC
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="queryList" parameterType="demoQuery" resultMap="demoMap">
+
+        select d.ID
+        <choose>
+            <when test="columns != null and columns.length>0"><!-- 指定列 -->
+                <foreach collection="columns" index="index" item="item">,${item}</foreach>
+            </when>
+            <otherwise>
+                ,d.FIELD_REGION
+                ,d.IMAGE_PATH
+                ,d.FIELD_CHECKBOX
+                ,d.FIELD_PROVINCE
+                ,d.FIELD_DATETIME
+                ,d.GMT_CREATE
+                ,d.IMAGE_PATH_LIST
+                ,d.FIELD_HTMLEDITOR_CUT
+                ,d.FIELD_RADIO
+                ,d.FIELD_NUMBER
+                ,d.FIELD_TEXTAREA
+                ,d.FIELD_SELECT
+                ,d.GMT_MODIFY
+                ,d.FIELD_TEXT
+                ,d.FIELD_DATE
+                ,d.STATUS
+                ,d.FIELD_CITY
+                <if test="joinDemoChild1">
+                    ,demoChild1.ID as demo_child1_ID
+                    ,demoChild1.demo_ID
+                    ,demoChild1.GMT_MODIFY as
+                    demo_child1_gmt_modify
+                    ,demoChild1.FIELD_TEXT as demo_child1_FIELD_TEXT
+                    ,demoChild1.GMT_CREATE as
+                    demo_child1_GMT_CREATE
+                    ,demoChild1.STATUS
+                    as demo_child1_STATUS
+                </if>
+            </otherwise>
+        </choose>
+        <include refid="queryCommonSql"/>
+        <include refid="sortSql"/>
+        <if test="pageSize>0">limit ${startRow},${pageSize}</if>
+    </select>
+
+    <select id="queryCount" parameterType="demoQuery" resultType="int">
+        select count(1)
+        <include refid="queryCommonSql"/>
+    </select>
+
+    <update id="updateStatus" parameterType="demo">
+        update demo set status=#{status} where ID=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from demo where ID=#{id}
+    </delete>
+</mapper>
