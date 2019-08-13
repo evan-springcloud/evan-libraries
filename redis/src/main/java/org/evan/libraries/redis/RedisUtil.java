@@ -16,6 +16,7 @@ import java.util.Date;
  * @version %I%, %G%
  * @since 1.0
  */
+@Deprecated
 public class RedisUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisUtil.class);
 

@@ -1,7 +1,6 @@
 package org.evan.libraries.cache;
 
-import org.evanframework.ehcache.EHCacheUtil;
-import org.evanframework.redis.RedisUtil;
+import org.evan.libraries.redis.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

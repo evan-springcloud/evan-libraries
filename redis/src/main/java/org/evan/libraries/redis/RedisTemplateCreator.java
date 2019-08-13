@@ -69,11 +69,11 @@ public class RedisTemplateCreator {
 //            poolConfig1.setMaxWaitMillis(poolConfig.getMaxWaitMillis());
 //            poolConfig1.set
             JedisConnectionFactory connectionFactory1 = null;
-            if (this.sentinelConfig == null) {
-                connectionFactory1 = new JedisConnectionFactory(connectionFactory.getPoolConfig());
-            } else {
-                connectionFactory1 = new JedisConnectionFactory(this.sentinelConfig, connectionFactory.getPoolConfig());
-            }
+//            if (this.sentinelConfig == null) {
+//                connectionFactory1 = new JedisConnectionFactory(connectionFactory.getPoolConfig());
+//            } else {
+//                connectionFactory1 = new JedisConnectionFactory(this.sentinelConfig, connectionFactory.getPoolConfig());
+//            }
             connectionFactory1.setPassword(connectionFactory.getPassword());
             connectionFactory1.setPort(connectionFactory.getPort());
             connectionFactory1.setTimeout(connectionFactory.getTimeout());

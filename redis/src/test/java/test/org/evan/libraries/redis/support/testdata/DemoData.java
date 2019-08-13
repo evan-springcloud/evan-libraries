@@ -1,4 +1,8 @@
-package test.org.evan.libraries.redis.support;
+package test.org.evan.libraries.redis.support.testdata;
+
+import org.evan.libraries.utils.RandomDataUtil;
+import test.org.evan.libraries.redis.support.model.Demo;
+import test.org.evan.libraries.redis.support.model.EnumSex;
 
 import java.math.BigDecimal;
 
@@ -8,12 +12,12 @@ public class DemoData {
 		Demo demo = new Demo();
 
 		demo.setFieldText(randomTitle());
-		demo.setFieldNumber(new BigDecimal(RandomData.randomInt(999999)));
+		demo.setFieldNumber(new BigDecimal(RandomDataUtil.randomInt(999999)));
 		demo.setFieldRadio(EnumSex.MAN.getValue() + "");
 		//demo.setFieldCheckboxArray(new EnumSex[] { EnumSex.WOMAN });
 		demo.setFieldSelect(EnumSex.WOMAN.getValue() + "");
-		demo.setFieldHtmleditorCut(RandomData.randomName("TestCut"));
-		demo.setFieldHtmleditor(RandomData.randomName("TestContent"));
+		demo.setFieldHtmleditorCut(RandomDataUtil.randomName("TestCut"));
+		demo.setFieldHtmleditor(RandomDataUtil.randomName("TestContent"));
 		demo.setFieldProvince("330000");
 		demo.setFieldCity("330100");
 		demo.setFieldRegion("330106");
@@ -40,7 +44,7 @@ public class DemoData {
 	//	}
 
 	public static String randomTitle() {
-		return RandomData.randomName("DEMO");
+		return RandomDataUtil.randomName("DEMO");
 	}
 
 }

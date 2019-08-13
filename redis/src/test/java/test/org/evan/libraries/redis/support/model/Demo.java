@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis.support;
+package test.org.evan.libraries.redis.support.model;
 
 import org.apache.commons.lang3.StringUtils;
 

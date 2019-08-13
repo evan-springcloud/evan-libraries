@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis;
+package test.org.evan.libraries.redis.testcase;
 
 
 import org.evan.libraries.redis.RedisUtil;
@@ -8,7 +8,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import test.org.evan.libraries.redis.support.Demo;
+import test.org.evan.libraries.redis.support.model.Demo;
 
 import java.io.Serializable;
 

@@ -1,4 +1,6 @@
-package test.org.evan.libraries.redis.support;
+package test.org.evan.libraries.redis.support.model;
+
+import test.org.evan.libraries.redis.support.model.Demo;
 
 import java.io.Serializable;
 import java.util.Date;

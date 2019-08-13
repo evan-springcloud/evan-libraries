@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis;
+package test.org.evan.libraries.redis.testcase;
 
 import org.evan.libraries.redis.RedisTemplateCreator;
 import org.junit.Before;
