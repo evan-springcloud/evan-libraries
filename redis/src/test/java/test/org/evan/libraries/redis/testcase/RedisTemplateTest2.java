@@ -15,7 +15,9 @@ import test.org.evan.libraries.redis.support.model.Demo;
  * @since 2019-08-13
  */
 public class RedisTemplateTest2 extends RedisTestCaseSupport {
-    private final static int DATABASE_COUNT = 16;//模拟16个库测试
+
+    private final static int KEY_COUNT = 8;//16个redis key
+    private final static int HASH_KEY_COUNT = 8;//每个redis key 8个 hash key
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -23,14 +25,14 @@ public class RedisTemplateTest2 extends RedisTestCaseSupport {
     @Test
     public void test() {
         long begin = System.currentTimeMillis();
-        System.out.println(begin);
+        LOGGER.info("begin: {} ", begin);
         long end;
         long begin1 = 0;
 
-        for (int i = 0; i < 10; i++) {
-            BoundHashOperations<String, String, Demo> hashOperations = redisTemplate.boundHashOps("demo" + i);
+        for (int i = 0; i < KEY_COUNT; i++) {
+            BoundHashOperations<String, String, Demo> hashOperations = redisTemplate.boundHashOps("key_demo" + i);
 
-            for (int j = 0; j < DATABASE_COUNT; j++) {
+            for (int j = 0; j < HASH_KEY_COUNT; j++) {
 //                RedisTemplate redisTemplate = redisTemplates.get(j);
                 redisTemplate.execute(new RedisCallback() {
                     @Override
@@ -42,24 +44,21 @@ public class RedisTemplateTest2 extends RedisTestCaseSupport {
                 Demo demo = new Demo(Long.valueOf(j));
                 demo.setFieldText(j + "");
 
-                hashOperations.put("key" + j, demo);
-            }
-            if (i % 1000 == 0) {
-                end = System.currentTimeMillis();
-                System.out.println(end - begin1);
-                begin1 = end;
+                hashOperations.put("hkey" + j, demo);
+
+                LOGGER.info("put demo: id:{}, text:{}", demo.getId(), demo.getFieldText());
             }
         }
         end = System.currentTimeMillis();
-        System.out.println(end - begin);
+        LOGGER.info("timespan:{} ", end - begin1);
 
-        for (int i = 0; i < 100; i++) {
-            BoundHashOperations<String, String, Demo> hashOperations = redisTemplate.boundHashOps("demo" + i);
+        for (int i = 0; i < KEY_COUNT; i++) {
+            BoundHashOperations<String, String, Demo> hashOperations = redisTemplate.boundHashOps("key_demo" + i);
 
-            for (int j = 0; j < DATABASE_COUNT; j++) {
-                Demo o = hashOperations.get("key" + j);
-                if(o != null) {
-                    LOGGER.info(o.getClass().getName() + o);
+            for (int j = 0; j < HASH_KEY_COUNT; j++) {
+                Demo o = hashOperations.get("hkey" + j);
+                if (o != null) {
+                    LOGGER.info("get demo: id:{}, text:{}", o.getId(), o.getFieldText());
                 }
             }
         }

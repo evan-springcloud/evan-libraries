@@ -20,6 +20,7 @@ import java.util.Vector;
  * @author shenwei
  * @since 1.0
  */
+@Deprecated //不支持集群
 public class RedisTemplateCreator {
     private final static Logger LOGGER = LoggerFactory.getLogger(RedisTemplateCreator.class);
 

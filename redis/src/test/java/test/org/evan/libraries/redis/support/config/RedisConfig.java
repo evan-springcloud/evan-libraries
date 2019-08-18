@@ -2,6 +2,7 @@ package test.org.evan.libraries.redis.support.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import org.evan.libraries.redis.RedisInitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -20,14 +21,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 public class RedisConfig {
     private static StringRedisSerializer keySerializer = new StringRedisSerializer();
-    private static GenericFastJsonRedisSerializer ValueSerializer = new GenericFastJsonRedisSerializer();
-
-    static {
-//        ObjectMapper om = new ObjectMapper();
-//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        //ValueSerializer.setObjectMapper(om);
-    }
+    private static GenericFastJsonRedisSerializer valueSerializer = new GenericFastJsonRedisSerializer();
 
     @Autowired
     private LettuceConnectionFactory lettuceConnectionFactory;
@@ -52,39 +46,6 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
-
-
-        // 配置redisTemplate
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-
-        redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-
-        redisTemplate.setKeySerializer(keySerializer);// key序列化
-        redisTemplate.setValueSerializer(ValueSerializer);// value序列化
-        redisTemplate.setHashKeySerializer(keySerializer);// Hash key序列化
-        redisTemplate.setHashValueSerializer(ValueSerializer);// Hash value序列化
-
-        redisTemplate.afterPropertiesSet();
-
-        return redisTemplate;
+        return RedisInitUtil.createRedisTemplate(lettuceConnectionFactory,keySerializer,valueSerializer,keySerializer,valueSerializer);
     }
-
-
-//    private RedisSerializer<String> keySerializer() {
-//        return new StringRedisSerializer();
-//    }
-//
-//    private RedisSerializer<Object> valueSerializer() {
-//        // 设置序列化
-//        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(
-//                Object.class);
-//        ObjectMapper om = new ObjectMapper();
-//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        jackson2JsonRedisSerializer.setObjectMapper(om);
-//        return jackson2JsonRedisSerializer;
-//
-//        //或者使用GenericJackson2JsonRedisSerializer
-//        //return new GenericJackson2JsonRedisSerializer();
-//    }
 }
