@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis.support.model;
+package test.org.evan.libraries.rocketmq.support.model;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,7 +22,7 @@ public class Demo implements Serializable {
     private String fieldCheckbox;//
     private String[] fieldCheckboxArray;//
     private String fieldCheckboxText;//
-    private EnumSex[] fieldCheckboxEnumArray;//
+    private SexEnum[] fieldCheckboxEnumArray;//
     private String fieldProvince;//
     private String fieldProvinceName;//
     private Date fieldDatetime;//
@@ -32,7 +32,7 @@ public class Demo implements Serializable {
     private String fieldHtmleditorCut;//
     private String fieldRadio;//
     private String fieldRadioText;//
-    private EnumSex fieldRadioEnum;//
+    private SexEnum fieldRadioEnum;//
     private BigDecimal fieldNumber;//
     private String fieldTextarea;//
     private String fieldSelect;//
@@ -330,14 +330,14 @@ public class Demo implements Serializable {
         if (StringUtils.isNotBlank(fieldCheckbox)) {
             String[] tmps = fieldCheckbox.split(",");
             StringBuilder text = new StringBuilder(128);
-            List<EnumSex> sexes = new ArrayList<EnumSex>(tmps.length);
+            List<SexEnum> sexes = new ArrayList<SexEnum>(tmps.length);
             List<String> sexvalues = new ArrayList<String>(tmps.length);
             int sexValue;
-            EnumSex sex = null;
+            SexEnum sex = null;
             for (String tmp : tmps) {
                 sexValue = Integer.valueOf(tmp);
                 sexvalues.add(sexValue + "");
-                sex = EnumSex.valueOf(sexValue );
+                sex = SexEnum.valueOf(sexValue );
                 sexes.add(sex);
                 text.append("," + sex.getText());
             }
@@ -345,7 +345,7 @@ public class Demo implements Serializable {
 
             this.fieldCheckboxText = text.toString();
             this.fieldCheckboxArray = sexvalues.toArray(new String[]{});
-            this.fieldCheckboxEnumArray = sexes.toArray(new EnumSex[]{});
+            this.fieldCheckboxEnumArray = sexes.toArray(new SexEnum[]{});
         }
     }
 
@@ -358,12 +358,12 @@ public class Demo implements Serializable {
         if (fieldCheckboxArray != null && fieldCheckboxArray.length > 0) {
             StringBuilder text = new StringBuilder(128);
             StringBuilder value = new StringBuilder(32);
-            List<EnumSex> sexes = new ArrayList<EnumSex>(fieldCheckboxArray.length);
+            List<SexEnum> sexes = new ArrayList<SexEnum>(fieldCheckboxArray.length);
             int sexValue;
-            EnumSex sex = null;
+            SexEnum sex = null;
             for (String fieldCheckbox : fieldCheckboxArray) {
                 sexValue = Integer.valueOf(fieldCheckbox);
-                sex = EnumSex.valueOf(sexValue);
+                sex = SexEnum.valueOf(sexValue);
                 sexes.add(sex);
                 text.append("," + sex.getText());
                 value.append("," + sexValue);
@@ -373,16 +373,16 @@ public class Demo implements Serializable {
 
             this.fieldCheckboxText = text.toString();
             this.fieldCheckbox = value.toString();
-            this.fieldCheckboxEnumArray = sexes.toArray(new EnumSex[]{});
+            this.fieldCheckboxEnumArray = sexes.toArray(new SexEnum[]{});
         }
 
     }
 
-    public EnumSex[] getFieldCheckboxEnumArray() {
+    public SexEnum[] getFieldCheckboxEnumArray() {
         return fieldCheckboxEnumArray;
     }
 
-    public void setFieldCheckboxEnumArray(EnumSex[] fieldCheckboxEnumArray) {
+    public void setFieldCheckboxEnumArray(SexEnum[] fieldCheckboxEnumArray) {
         this.fieldCheckboxEnumArray = fieldCheckboxEnumArray;
     }
 
@@ -393,16 +393,16 @@ public class Demo implements Serializable {
     public void setFieldRadio(String fieldRadio) {
         this.fieldRadio = fieldRadio;
         if (StringUtils.isNotBlank(fieldRadio)) {
-            this.fieldRadioEnum = EnumSex.valueOf(Integer.valueOf(fieldRadio));
+            this.fieldRadioEnum = SexEnum.valueOf(Integer.valueOf(fieldRadio));
             this.fieldRadioText = this.fieldRadioEnum.getText();
         }
     }
 
-    public EnumSex getFieldRadioEnum() {
+    public SexEnum getFieldRadioEnum() {
         return fieldRadioEnum;
     }
 
-    public void setFieldRadioEnum(EnumSex fieldRadioEnum) {
+    public void setFieldRadioEnum(SexEnum fieldRadioEnum) {
         this.fieldRadioEnum = fieldRadioEnum;
 
         if (this.fieldRadioEnum != null) {

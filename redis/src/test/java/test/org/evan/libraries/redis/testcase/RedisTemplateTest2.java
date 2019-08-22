@@ -1,5 +1,6 @@
 package test.org.evan.libraries.redis.testcase;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -9,6 +10,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import test.org.evan.libraries.redis.support.RedisTestCaseSupport;
 import test.org.evan.libraries.redis.support.model.Demo;
+import test.org.evan.libraries.redis.support.model.SexEnum;
 
 /**
  * @author Evan.Shen
@@ -44,9 +46,15 @@ public class RedisTemplateTest2 extends RedisTestCaseSupport {
                 Demo demo = new Demo(Long.valueOf(j));
                 demo.setFieldText(j + "");
 
+                if(j % 2 == 0) {
+                    demo.setFieldRadioEnum(SexEnum.MAN);
+                }else{
+                    demo.setFieldRadioEnum(SexEnum.WOMAN);
+                }
+
                 hashOperations.put("hkey" + j, demo);
 
-                LOGGER.info("put demo: id:{}, text:{}", demo.getId(), demo.getFieldText());
+                LOGGER.info("put demo: {}", JSON.toJSON(demo));
             }
         }
         end = System.currentTimeMillis();
@@ -58,7 +66,7 @@ public class RedisTemplateTest2 extends RedisTestCaseSupport {
             for (int j = 0; j < HASH_KEY_COUNT; j++) {
                 Demo o = hashOperations.get("hkey" + j);
                 if (o != null) {
-                    LOGGER.info("get demo: id:{}, text:{}", o.getId(), o.getFieldText());
+                    LOGGER.info("get demo: {}", JSON.toJSON(o));
                 }
             }
         }

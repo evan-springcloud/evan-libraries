@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: evan-libraries-orm-test
+    name: evan-libraries-redis-test
   redis:
     #database: 1
     #host: 47.96.89.84

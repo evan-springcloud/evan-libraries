@@ -1,7 +1,6 @@
 package org.evan.libraries.redis;
 
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
@@ -80,7 +79,7 @@ public class RedisTemplateCreator {
             connectionFactory1.setTimeout(connectionFactory.getTimeout());
             //connectionFactory1.setClientName(connectionFactory.getClientName());
             connectionFactory1.setHostName(connectionFactory.getHostName());
-            connectionFactory1.setShardInfo(connectionFactory.getShardInfo());
+            //connectionFactory1.setShardInfo(connectionFactory.getShardInfo());
             connectionFactory1.setUsePool(connectionFactory.getUsePool());
             connectionFactory1.setConvertPipelineAndTxResults(connectionFactory.getConvertPipelineAndTxResults());
             connectionFactory1.setDatabase(databaseIndex);

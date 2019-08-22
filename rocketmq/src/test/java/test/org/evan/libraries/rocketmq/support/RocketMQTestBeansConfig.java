@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis.support;
+package test.org.evan.libraries.rocketmq.support;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {
-        "test.org.evan.libraries.redis.support.config",
+        "test.org.evan.libraries.rocketmq.support.config",
 })
-public class RedisTestBeansConfig {
+public class RocketMQTestBeansConfig {
 }

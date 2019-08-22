@@ -1,4 +1,4 @@
-package test.org.evan.libraries.redis.support;
+package test.org.evan.libraries.rocketmq.support;
 
 
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author evan.shen
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = RedisTestBeansConfig.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class RedisTestCaseSupport {
+@SpringBootTest(classes = RocketMQTestBeansConfig.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+public class RocketMQTestCaseSupport {
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 }

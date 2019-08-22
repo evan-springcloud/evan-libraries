@@ -1,4 +1,4 @@
-package test.org.evan.libraries.rocketmq.testcase;
+package test.org.evan.libraries.rocketmq.support.consumer;
 
 /**
  * @author Evan.Shen
@@ -6,6 +6,7 @@ package test.org.evan.libraries.rocketmq.testcase;
  */
 
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
@@ -18,12 +19,12 @@ import test.org.evan.libraries.rocketmq.support.model.Demo;
 
 @Slf4j
 @Service
-@RocketMQMessageListener(topic = "topic-test", consumerGroup = "group1", consumeMode = ConsumeMode.CONCURRENTLY, messageModel = MessageModel.CLUSTERING)
+@RocketMQMessageListener(topic = "TEST_0_TOPIC", consumerGroup = "consumer0Group", consumeMode = ConsumeMode.CONCURRENTLY, messageModel = MessageModel.BROADCASTING)
 public class ConsumerTopicTest implements RocketMQListener<Demo> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerTopicTest.class);
 
     public void onMessage(Demo message) {
-        LOGGER.info("received message: {}", message);
+        LOGGER.info("received message: {}", JSON.toJSON(message));
         // throw new IllegalStateException();
     }
 }

@@ -1,7 +1,6 @@
 package org.evan.libraries.redis;
 
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
@@ -20,7 +19,7 @@ public class RedisInitUtil {
 
     public static RedisTemplate<String, Object> createRedisTemplate(
             RedisConnectionFactory redisConnectionFactory,
-            RedisSerializer keySerializer,RedisSerializer valueSerializer,RedisSerializer hashKeySerializer,RedisSerializer hashValueSerializer) {
+            RedisSerializer keySerializer, RedisSerializer valueSerializer, RedisSerializer hashKeySerializer, RedisSerializer hashValueSerializer) {
         // 配置redisTemplate
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 

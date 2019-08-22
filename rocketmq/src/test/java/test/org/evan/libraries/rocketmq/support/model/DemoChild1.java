@@ -1,6 +1,4 @@
-package test.org.evan.libraries.redis.support.model;
-
-import test.org.evan.libraries.redis.support.model.Demo;
+package test.org.evan.libraries.rocketmq.support.model;
 
 import java.io.Serializable;
 import java.util.Date;

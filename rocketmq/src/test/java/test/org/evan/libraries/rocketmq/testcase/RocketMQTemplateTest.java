@@ -1,8 +1,10 @@
 package test.org.evan.libraries.rocketmq.testcase;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,13 @@ import test.org.evan.libraries.rocketmq.support.model.SexEnum;
  * @author Evan.Shen
  * @since 2019-08-19
  */
-public class ProducerTest extends RocketMQTestCaseSupport {
+public class RocketMQTemplateTest extends RocketMQTestCaseSupport {
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
     @Test
-    public void test() {
-        for (int i = 0; i < 8; i++) {
+    public void test() throws InterruptedException {
+        for (int i = 0; i < 7; i++) {
             Demo demo = new Demo(Long.valueOf(i));
 
             demo.setFieldText("text" + i);
@@ -50,6 +52,8 @@ public class ProducerTest extends RocketMQTestCaseSupport {
                 }
             });
         }
+
+        Thread.sleep(10000l);
 
 
 //        DefaultMQProducer producer = rocketMQTemplate.getProducer();
