@@ -1,3 +1,5 @@
+server:
+  port: 9001
 
 spring:
   application:
@@ -5,15 +7,19 @@ spring:
 
 rocketmq:
   name-server: 192.168.31.142:9876; 192.168.31.105:9876
-  #producer:
-    #group: producerGroup
-
+  producer:
+    group: producerGroup
+    retryNextServer: true
+    sendMessageTimeout: 5000
+    retryTimesWhenSendFailed: 4
+    retryTimesWhenSendAsyncFailed: 0
 
 logging:
   pattern:
     #console: "%date{dd HH:mm:ss} %level [%thread] %msg。%-60caller{1}"
     console: "%date{dd HH:mm:ss} %-5level [%thread] %-50logger{1}: %msg \n"
   level:
-    org.springframework.boot.autoconfigure.logging: warn
+    org.springframework.boot.autoconfigure.logging: info
     org.evan.libraries: DEBUG
     test.org.evan.libraries: DEBUG
+

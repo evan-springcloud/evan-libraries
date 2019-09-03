@@ -1,10 +1,12 @@
 package test.org.evan.libraries.rocketmq.testcase;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.junit.Test;
@@ -17,16 +19,19 @@ import test.org.evan.libraries.rocketmq.support.model.SexEnum;
  * @author Evan.Shen
  * @since 2019-08-22
  */
+@Slf4j
 public class ProducerTest extends RocketMQTestCaseSupport {
-
     @Autowired
     private DefaultMQProducer defaultMQProducer;
 
-    @Test
-    public void test() throws MQClientException, RemotingException, InterruptedException {
-        for (int i = 0; i < 20; i++) {
-            Demo demo = new Demo(Long.valueOf(i));
+    //private AtomicInteger sendCount;
 
+    @Test
+    public void test() throws InterruptedException {
+        int successCount = 0;
+
+        for (int i = 0; i < 20000; i++) {
+            Demo demo = new Demo(Long.valueOf(i));
             demo.setFieldText("text" + i);
 
             if (i % 2 == 0) {
@@ -35,28 +40,29 @@ public class ProducerTest extends RocketMQTestCaseSupport {
                 demo.setFieldRadioEnum(SexEnum.WOMAN);
             }
 
-            //int topicNo = i % 3;
+            int topicNo = i % 2;
+            //int topicNo = 0;
+            //log.info("Send [no:{} {}]", i, JSON.toJSON(demo));
+            Message message = new Message("TEST_" + topicNo + "_TOPIC", "", JSON.toJSONBytes(demo));
 
-            LOGGER.info("Send: {}", JSON.toJSON(demo));
+            try {
+                SendResult result = defaultMQProducer.send(message);
 
-            int topicNo = 0;
-            //rocketMQTemplate.convertAndSend("TEST_" + topicNo + "_TOPIC", demo);
-
-            Message message = new Message("TEST_" + topicNo + "_TOPIC", "", (JSON.toJSON(demo) + "").getBytes());
-
-            defaultMQProducer.send(message, new SendCallback() {
-                @Override
-                public void onSuccess(SendResult sendResult) {
-                    LOGGER.info("传输成功");
-                    LOGGER.info(JSON.toJSONString(sendResult));
+                if (SendStatus.SEND_OK.equals(result.getSendStatus())) {
+                    successCount ++;
+                } else {
+                    log.error("传输失败," + result.getSendStatus());
                 }
-
-                @Override
-                public void onException(Throwable e) {
-                    LOGGER.error("传输失败", e);
-                }
-            });
+            } catch (MQClientException | RemotingException | MQBrokerException ex) {
+                log.error("传输失败", ex);
+            }
+            if (i % 2000 == 0) {
+                //Thread.sleep(1500);
+                log.info("send {}", i);
+            }
         }
+
+        log.info("成功：{}", successCount);
 
         Thread.sleep(10000l);
     }

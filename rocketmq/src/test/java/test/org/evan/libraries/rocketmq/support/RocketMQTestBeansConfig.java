@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {
         "test.org.evan.libraries.rocketmq.support.config",
+        "org.apache.rocketmq.spring.autoconfigure"
 })
 public class RocketMQTestBeansConfig {
 }

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "test.org.evan.libraries.rocketmq.support.config",
         "test.org.evan.libraries.rocketmq.support.consumer",
 })
 public class ConsumerTest {
