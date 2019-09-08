@@ -16,8 +16,9 @@ spring:
       connection-timeout: 2000
 
 logging:
+  config: classpath:logback-spring.xml
   pattern:
-    console: "%date{dd HH:mm:ss} %level [%thread] %msg。%-60caller{1}"
+    console: "%clr(%d{dd HH:mm:ss}){faint} %clr(%-5p) %clr([%15.15t]){faint} %clr(%-50logger{50}){cyan} %clr(:){faint} %m%n"
   level:
     org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: warn
     org.springframework.boot.autoconfigure.logging: warn

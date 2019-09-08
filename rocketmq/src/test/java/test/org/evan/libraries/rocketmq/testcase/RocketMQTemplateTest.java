@@ -11,6 +11,8 @@ import test.org.evan.libraries.rocketmq.support.RocketMQTestCaseSupport;
 import test.org.evan.libraries.rocketmq.support.model.Demo;
 import test.org.evan.libraries.rocketmq.support.model.SexEnum;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author Evan.Shen
  * @since 2019-08-19
@@ -23,7 +25,9 @@ public class RocketMQTemplateTest extends RocketMQTestCaseSupport {
 
     @Test
     public void test() throws InterruptedException {
-        for (int i = 0; i < 60000; i++) {
+        final AtomicInteger sendCount = new AtomicInteger(0);
+
+        for (int i = 0; i < 20000; i++) {
             Demo demo = new Demo(Long.valueOf(i));
 
             demo.setFieldText("text" + i);
@@ -35,15 +39,17 @@ public class RocketMQTemplateTest extends RocketMQTestCaseSupport {
             }
 
             //int topicNo = 2;
-            int topicNo = i % 3;
+            int topicNo = i % 2;
 
             log.info("Send [no:{} {}]", i, JSON.toJSON(demo));
             //rocketMQTemplate.convertAndSend("TEST_" + topicNo + "_TOPIC", demo);
             rocketMQTemplate.asyncSend("TEST_" + topicNo + "_TOPIC", demo, new SendCallback() {
                 @Override
                 public void onSuccess(SendResult sendResult) {
-                    LOGGER.info("传输成功,{}",JSON.toJSONString(sendResult));
+                    sendCount.getAndAdd(1);
+                    //LOGGER.info("传输成功,{}", JSON.toJSONString(sendResult));
                 }
+
                 @Override
                 public void onException(Throwable e) {
                     LOGGER.error("传输失败", e);
@@ -51,10 +57,13 @@ public class RocketMQTemplateTest extends RocketMQTestCaseSupport {
             });
 
             if (i % 2000 == 0) {
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
+                log.info("send {}", i);
             }
         }
 
-        Thread.sleep(10000l);
+        log.info("成功：{}", sendCount.get());
+
+        Thread.sleep(100000l);
     }
 }

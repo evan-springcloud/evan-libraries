@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.evan.libraries</groupId>
             <artifactId>evan-libraries-utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <!--test begin -->
@@ -58,6 +58,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.evan.libraries</groupId>
+            <artifactId>evan-libraries-redis</artifactId>
+            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
 

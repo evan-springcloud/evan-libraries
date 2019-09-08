@@ -5,16 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.message.MessageQueue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import test.org.evan.libraries.rocketmq.support.model.Demo;
 import test.org.evan.libraries.rocketmq.support.model.MessageStatBO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -26,7 +28,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 @Component
 @Slf4j
 public class ConsumerDataStater {
-    private BlockingQueue<MessageExt> consumerDataTmpStore = new LinkedBlockingDeque<>(5120);
+    //private BlockingQueue<MessageExt> consumerDataTmpStore = new LinkedBlockingDeque<>(5120);
     private BlockingQueue<MessageStatBO> consumerDataCountTmpStore = new LinkedBlockingDeque<>(1024);
     private ConcurrentHashMap<String, Integer> consumerDataStatResult = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, Integer> duplicateCheckResult = new ConcurrentHashMap<>(128);
@@ -35,22 +37,39 @@ public class ConsumerDataStater {
     private Thread statDataPrintThread;
     private Thread duplicateCheckThread;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private ListOperations<String, Map<String, Object>> listOperations;
+
+    private HashOperations<String, String, Map<String, Object>> hashOperations;
+
+    private ListOperations<String, Map<String, Object>> operationsDuplicate;
+
     @PostConstruct
     public void init() {
+        listOperations = redisTemplate.opsForList();
+        hashOperations = redisTemplate.opsForHash();
+        operationsDuplicate = redisTemplate.opsForList();
+//        boundListOperationsForAll = redisTemplate.boundListOps("all");
+//        BoundListOperations = redisTemplate.boundListOps("rocketMsg");
+//        boundHashOperations = redisTemplate.boundHashOps("rocketMsg");
+//        boundHashOperations = redisTemplate.boundHashOps("rocketMsg");
+
 
         statThread = new Thread(new StatRunnable(consumerDataCountTmpStore, consumerDataStatResult));
-        duplicateCheckThread = new Thread(new DuplicateChecker(consumerDataTmpStore, duplicateCheckResult));
+        //duplicateCheckThread = new Thread(new DuplicateChecker(redisTemplate, duplicateCheckResult));
         statDataPrintThread = new Thread(new StatDataPrinter(consumerDataStatResult, duplicateCheckResult));
 
         statThread.start();
-        duplicateCheckThread.start();
+        //duplicateCheckThread.start();
         statDataPrintThread.start();
     }
 
     @PreDestroy
     public void destroy() {
         statThread.interrupt();
-        duplicateCheckThread.interrupt();
+        //duplicateCheckThread.interrupt();
         statDataPrintThread.interrupt();
     }
 
@@ -63,7 +82,24 @@ public class ConsumerDataStater {
             consumerDataCountTmpStore.put(messageStatBO);
 
             for (MessageExt messageExt : msgs) {
-                consumerDataTmpStore.put(messageExt);
+                Demo demo = JSON.parseObject(messageExt.getBody(), Demo.class);
+
+                Map<String, Object> map = new HashMap();
+
+                map.put("broker", messageQueue.getBrokerName());
+                map.put("topic", messageQueue.getTopic());
+                map.put("message", messageExt);
+
+                listOperations.rightPush("total", map);
+
+                if (hashOperations.hasKey("total2", messageExt.getMsgId())) {
+                    operationsDuplicate.rightPush("duplicate", map);
+                } else {
+                    hashOperations.put("total2", messageExt.getMsgId(), map);
+                }
+
+                listOperations.rightPush(messageQueue.getBrokerName() + "-" + messageQueue.getTopic(), map);
+                //consumerDataTmpStore.put(messageExt);
             }
 
         } catch (InterruptedException ex) {
@@ -113,14 +149,18 @@ class StatRunnable implements Runnable {
 
 @Slf4j
 class DuplicateChecker implements Runnable {
-    private BlockingQueue<MessageExt> consumerDataTmpStore;
+    private RedisTemplate redisTemplate;
     private ConcurrentHashMap<String, Integer> duplicateCheckResult;
 
     private Set<String> duplicateCheckSet = new HashSet<>(10240);
 
-    public DuplicateChecker(BlockingQueue<MessageExt> consumerDataTmpStore, ConcurrentHashMap<String, Integer> duplicateCheckResult) {
-        this.consumerDataTmpStore = consumerDataTmpStore;
+    private BoundHashOperations<String, String, Demo> boundHashOperations;
+
+    public DuplicateChecker(RedisTemplate redisTemplate, ConcurrentHashMap<String, Integer> duplicateCheckResult) {
+        this.redisTemplate = redisTemplate;
         this.duplicateCheckResult = duplicateCheckResult;
+
+        boundHashOperations = redisTemplate.boundHashOps("rocketMsg");
     }
 
     @Override
@@ -128,11 +168,13 @@ class DuplicateChecker implements Runnable {
         while (true) {
             MessageExt o = null;
 
-            try {
-                o = consumerDataTmpStore.take();
-            } catch (InterruptedException e) {
-                log.warn(e.getMessage(), e);
-            }
+            //boundHashOperations.entries();
+
+//            try {
+//                o = consumerDataTmpStore.take();
+//            } catch (InterruptedException e) {
+//                log.warn(e.getMessage(), e);
+//            }
 
             if (o != null) {
                 Demo demo = JSON.parseObject(o.getBody(), Demo.class);
@@ -163,7 +205,7 @@ class StatDataPrinter implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(8000);
+                Thread.sleep(10000);
             } catch (InterruptedException ex) {
                 printData();
             }

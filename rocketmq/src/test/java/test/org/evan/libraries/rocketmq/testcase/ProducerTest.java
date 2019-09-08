@@ -8,12 +8,19 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import test.org.evan.libraries.rocketmq.support.RocketMQTestCaseSupport;
 import test.org.evan.libraries.rocketmq.support.model.Demo;
 import test.org.evan.libraries.rocketmq.support.model.SexEnum;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Evan.Shen
@@ -24,7 +31,16 @@ public class ProducerTest extends RocketMQTestCaseSupport {
     @Autowired
     private DefaultMQProducer defaultMQProducer;
 
-    //private AtomicInteger sendCount;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private ListOperations<String, Map<String, Object>> listOperations;
+
+    @Before
+    public void init() {
+        listOperations = redisTemplate.opsForList();
+    }
+
 
     @Test
     public void test() throws InterruptedException {
@@ -49,7 +65,18 @@ public class ProducerTest extends RocketMQTestCaseSupport {
                 SendResult result = defaultMQProducer.send(message);
 
                 if (SendStatus.SEND_OK.equals(result.getSendStatus())) {
-                    successCount ++;
+                    Map<String, Object> map = new HashMap();
+
+                    MessageQueue messageQueue = result.getMessageQueue();
+
+                    map.put("broker", messageQueue.getBrokerName());
+                    map.put("topic", messageQueue.getTopic());
+                    map.put("region", result.getRegionId());
+
+                    listOperations.rightPush("send_total", map);
+                    listOperations.rightPush("send_" + messageQueue.getBrokerName() + "_" + messageQueue.getTopic(), map);
+
+                    successCount++;
                 } else {
                     log.error("传输失败," + result.getSendStatus());
                 }

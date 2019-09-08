@@ -1,0 +1,162 @@
+19-09-08 00:05:01 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Starting ProducerTest on evan-macbook with PID 3129 (started by evan in /Users/evan/sources/evan/java/evan-springcloud/evan-libraries/rocketmq)
+19-09-08 00:05:01 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : No active profile set, falling back to default profiles: default
+19-09-08 00:05:01 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Multiple Spring Data modules found, entering strict repository configuration mode!
+19-09-08 00:05:01 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Bootstrapping Spring Data repositories in DEFAULT mode.
+19-09-08 00:05:01 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Finished Spring Data repository scanning in 20ms. Found 0 repository interfaces.
+19-09-08 00:05:01 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQAutoConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration$$EnhancerBySpringCGLIB$$11fe0225] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketmq-org.apache.rocketmq.spring.autoconfigure.RocketMQProperties' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'defaultMQProducer' of type [org.apache.rocketmq.client.producer.DefaultMQProducer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'jacksonFallbackConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.JacksonFallbackConfiguration$$EnhancerBySpringCGLIB$$43799887] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQMessageObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQTemplate' of type [org.apache.rocketmq.spring.core.RocketMQTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'transactionHandlerRegistry' of type [org.apache.rocketmq.spring.config.TransactionHandlerRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:05:02 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[] result: true
+19-09-08 00:05:02 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Started ProducerTest in 2.058 seconds (JVM running for 2.616)
+19-09-08 00:05:03 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 0
+19-09-08 00:05:22 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 2000
+19-09-08 00:05:40 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 4000
+19-09-08 00:05:58 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 6000
+19-09-08 00:06:17 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 8000
+19-09-08 00:06:40 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 10000
+19-09-08 00:06:59 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 12000
+19-09-08 00:07:17 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 14000
+19-09-08 00:07:37 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 16000
+19-09-08 00:07:58 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 18000
+19-09-08 00:08:17 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : 成功：20000
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:08:28 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 00:12:55 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Starting ProducerTest on evan-macbook with PID 3240 (started by evan in /Users/evan/sources/evan/java/evan-springcloud/evan-libraries/rocketmq)
+19-09-08 00:12:55 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : No active profile set, falling back to default profiles: default
+19-09-08 00:12:56 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Multiple Spring Data modules found, entering strict repository configuration mode!
+19-09-08 00:12:56 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Bootstrapping Spring Data repositories in DEFAULT mode.
+19-09-08 00:12:56 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Finished Spring Data repository scanning in 24ms. Found 0 repository interfaces.
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQAutoConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration$$EnhancerBySpringCGLIB$$89085846] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketmq-org.apache.rocketmq.spring.autoconfigure.RocketMQProperties' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'defaultMQProducer' of type [org.apache.rocketmq.client.producer.DefaultMQProducer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'jacksonFallbackConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.JacksonFallbackConfiguration$$EnhancerBySpringCGLIB$$ba83eea8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQMessageObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQTemplate' of type [org.apache.rocketmq.spring.core.RocketMQTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:56 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'transactionHandlerRegistry' of type [org.apache.rocketmq.spring.config.TransactionHandlerRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:12:57 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[] result: true
+19-09-08 00:12:57 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[] result: true
+19-09-08 00:12:57 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Started ProducerTest in 2.273 seconds (JVM running for 2.894)
+19-09-08 00:12:57 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 0
+19-09-08 00:13:21 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 2000
+19-09-08 00:13:49 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 4000
+19-09-08 00:14:15 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 6000
+19-09-08 00:14:41 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 8000
+19-09-08 00:15:07 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 10000
+19-09-08 00:15:30 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 12000
+19-09-08 00:15:57 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 14000
+19-09-08 00:16:23 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 16000
+19-09-08 00:16:53 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 18000
+19-09-08 00:17:12 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : 成功：19999
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:17:22 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 00:40:02 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Starting ProducerTest on evan-macbook with PID 3611 (started by evan in /Users/evan/sources/evan/java/evan-springcloud/evan-libraries/rocketmq)
+19-09-08 00:40:02 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : No active profile set, falling back to default profiles: default
+19-09-08 00:40:02 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Multiple Spring Data modules found, entering strict repository configuration mode!
+19-09-08 00:40:02 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Bootstrapping Spring Data repositories in DEFAULT mode.
+19-09-08 00:40:02 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Finished Spring Data repository scanning in 25ms. Found 0 repository interfaces.
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQAutoConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration$$EnhancerBySpringCGLIB$$89085846] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketmq-org.apache.rocketmq.spring.autoconfigure.RocketMQProperties' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'defaultMQProducer' of type [org.apache.rocketmq.client.producer.DefaultMQProducer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'jacksonFallbackConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.JacksonFallbackConfiguration$$EnhancerBySpringCGLIB$$ba83eea8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQMessageObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQTemplate' of type [org.apache.rocketmq.spring.core.RocketMQTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'transactionHandlerRegistry' of type [org.apache.rocketmq.spring.config.TransactionHandlerRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 00:40:03 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Started ProducerTest in 2.164 seconds (JVM running for 2.723)
+19-09-08 00:40:04 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 0
+19-09-08 00:40:34 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 2000
+19-09-08 00:40:56 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 4000
+19-09-08 00:41:16 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 6000
+19-09-08 00:41:44 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 8000
+19-09-08 00:42:07 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 10000
+19-09-08 00:42:33 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 12000
+19-09-08 00:42:58 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 14000
+19-09-08 00:43:32 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 16000
+19-09-08 00:44:00 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 18000
+19-09-08 00:44:27 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : 成功：19999
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 00:44:37 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 01:00:22 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Starting ProducerTest on evan-macbook with PID 3896 (started by evan in /Users/evan/sources/evan/java/evan-springcloud/evan-libraries/rocketmq)
+19-09-08 01:00:22 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : No active profile set, falling back to default profiles: default
+19-09-08 01:00:22 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Multiple Spring Data modules found, entering strict repository configuration mode!
+19-09-08 01:00:22 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Bootstrapping Spring Data repositories in DEFAULT mode.
+19-09-08 01:00:22 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Finished Spring Data repository scanning in 21ms. Found 0 repository interfaces.
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQAutoConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration$$EnhancerBySpringCGLIB$$8c46daec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketmq-org.apache.rocketmq.spring.autoconfigure.RocketMQProperties' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'defaultMQProducer' of type [org.apache.rocketmq.client.producer.DefaultMQProducer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'jacksonFallbackConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.JacksonFallbackConfiguration$$EnhancerBySpringCGLIB$$bdc2714e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQMessageObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQTemplate' of type [org.apache.rocketmq.spring.core.RocketMQTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:23 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'transactionHandlerRegistry' of type [org.apache.rocketmq.spring.config.TransactionHandlerRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:00:24 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Started ProducerTest in 2.168 seconds (JVM running for 2.731)
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 01:00:24 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 01:01:49 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Starting ProducerTest on evan-macbook with PID 3926 (started by evan in /Users/evan/sources/evan/java/evan-springcloud/evan-libraries/rocketmq)
+19-09-08 01:01:49 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : No active profile set, falling back to default profiles: default
+19-09-08 01:01:49 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Multiple Spring Data modules found, entering strict repository configuration mode!
+19-09-08 01:01:49 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Bootstrapping Spring Data repositories in DEFAULT mode.
+19-09-08 01:01:49 [                main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate          : Finished Spring Data repository scanning in 22ms. Found 0 repository interfaces.
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQAutoConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration$$EnhancerBySpringCGLIB$$79e3ca06] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketmq-org.apache.rocketmq.spring.autoconfigure.RocketMQProperties' of type [org.apache.rocketmq.spring.autoconfigure.RocketMQProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'defaultMQProducer' of type [org.apache.rocketmq.client.producer.DefaultMQProducer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'jacksonFallbackConfiguration' of type [org.apache.rocketmq.spring.autoconfigure.JacksonFallbackConfiguration$$EnhancerBySpringCGLIB$$ab5f6068] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQMessageObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'rocketMQTemplate' of type [org.apache.rocketmq.spring.core.RocketMQTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [                main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker : Bean 'transactionHandlerRegistry' of type [org.apache.rocketmq.spring.config.TransactionHandlerRegistry] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+19-09-08 01:01:50 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[] result: true
+19-09-08 01:01:50 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[] result: true
+19-09-08 01:01:51 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : Started ProducerTest in 2.369 seconds (JVM running for 2.974)
+19-09-08 01:01:51 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 0
+19-09-08 01:02:23 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 2000
+19-09-08 01:02:44 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 4000
+19-09-08 01:03:17 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 6000
+19-09-08 01:03:38 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 8000
+19-09-08 01:04:00 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 10000
+19-09-08 01:04:23 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 12000
+19-09-08 01:04:43 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 14000
+19-09-08 01:05:03 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 16000
+19-09-08 01:05:26 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : send 18000
+19-09-08 01:05:43 [                main] INFO  t.o.e.l.r.t.ProducerTest                           : 成功：14565
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:11011] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.105:10911] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:10911] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:9876] result: true
+19-09-08 01:05:54 [NettyClientSelector_1] INFO  RocketmqRemoting                                   : closeChannel: close the connection to remote address[192.168.31.142:11011] result: true

@@ -28,14 +28,18 @@ public class ListenterForDemo implements MessageListenerConcurrently {
         //log.info(context.getMessageQueue() + "");
         for (MessageExt e : msgs) {
             Demo demo = JSON.parseObject(e.getBody(), Demo.class);
-            //log.info(JSON.toJSONString(demo));
+
+            if(log.isTraceEnabled()){
+                log.trace(JSON.toJSONString(demo));
+            }
+
             if (demo != null && demo.getId() != null) {
                 if (demo.getId() % 15 == 0) {
                     try {
-                        Thread.sleep(1200); //模拟消费慢
+                        Thread.sleep(1500); //模拟消费慢
                         //log.info(">>>>>>>>>>>>>> stoping");
                     } catch (InterruptedException ex) {
-                        log.warn(ex.getMessage(),ex);
+                        //log.warn(ex.getMessage(),ex);
                     }
                 }
             }

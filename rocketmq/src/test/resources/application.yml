@@ -4,22 +4,31 @@ server:
 spring:
   application:
     name: evan-libraries-rocketmq-test
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    #password: MiZhi001
+    lettuce:
+      pool:
+        max-active: 256
+        max-idle: 16
+        min-idle: 16
+        max-wait: 5000ms
+    timeout: 2000ms
 
 rocketmq:
   name-server: 192.168.31.142:9876; 192.168.31.105:9876
   producer:
     group: producerGroup
-    retryNextServer: true
+    #retryNextServer: true # 当主从同步失败FLUSH_SLAVE_TIMEOUT时，消息会发送到另外一个broker造成消息重复
     sendMessageTimeout: 5000
     retryTimesWhenSendFailed: 4
     retryTimesWhenSendAsyncFailed: 0
 
 logging:
+  config: classpath:logback-spring.xml
   pattern:
-    #console: "%date{dd HH:mm:ss} %level [%thread] %msg。%-60caller{1}"
-    console: "%date{dd HH:mm:ss} %-5level [%thread] %-50logger{1}: %msg \n"
-  level:
-    org.springframework.boot.autoconfigure.logging: info
-    org.evan.libraries: DEBUG
-    test.org.evan.libraries: DEBUG
+    console: "%clr(%d{dd HH:mm:ss}){faint} %clr(%-5p) %clr([%15.15t]){faint} %clr(%-50logger{50}){cyan} %clr(:){faint} %m%n"
+
 
