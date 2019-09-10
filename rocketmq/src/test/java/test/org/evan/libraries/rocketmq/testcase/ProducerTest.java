@@ -28,6 +28,7 @@ import java.util.Map;
  */
 @Slf4j
 public class ProducerTest extends RocketMQTestCaseSupport {
+
     @Autowired
     private DefaultMQProducer defaultMQProducer;
 
@@ -46,7 +47,9 @@ public class ProducerTest extends RocketMQTestCaseSupport {
     public void test() throws InterruptedException {
         int successCount = 0;
 
-        for (int i = 0; i < 20000; i++) {
+        int sendCount = 40000;
+
+        for (int i = 0; i < sendCount; i++) {
             Demo demo = new Demo(Long.valueOf(i));
             demo.setFieldText("text" + i);
 
@@ -64,7 +67,11 @@ public class ProducerTest extends RocketMQTestCaseSupport {
             try {
                 SendResult result = defaultMQProducer.send(message);
 
-                if (SendStatus.SEND_OK.equals(result.getSendStatus())) {
+                if (SendStatus.SEND_OK.equals(result.getSendStatus())
+                        || SendStatus.SLAVE_NOT_AVAILABLE.equals(result.getSendStatus())
+                        || SendStatus.FLUSH_SLAVE_TIMEOUT.equals(result.getSendStatus())
+                        || SendStatus.FLUSH_DISK_TIMEOUT.equals(result.getSendStatus())
+                ) {
                     Map<String, Object> map = new HashMap();
 
                     MessageQueue messageQueue = result.getMessageQueue();
@@ -73,17 +80,21 @@ public class ProducerTest extends RocketMQTestCaseSupport {
                     map.put("topic", messageQueue.getTopic());
                     map.put("region", result.getRegionId());
 
-                    listOperations.rightPush("send_total", map);
-                    listOperations.rightPush("send_" + messageQueue.getBrokerName() + "_" + messageQueue.getTopic(), map);
+                    listOperations.rightPush("total_send", map);
+                    listOperations.rightPush(messageQueue.getBrokerName() + "_" + messageQueue.getTopic() + "_send", map);
 
                     successCount++;
+
+                    if (!SendStatus.SEND_OK.equals(result.getSendStatus())){
+                        log.warn(result.getSendStatus().name());
+                    }
                 } else {
                     log.error("传输失败," + result.getSendStatus());
                 }
             } catch (MQClientException | RemotingException | MQBrokerException ex) {
-                log.error("传输失败", ex);
+                log.error("传输失败，id = " + demo.getId(), ex);
             }
-            if (i % 2000 == 0) {
+            if (i % 500 == 0) {
                 //Thread.sleep(1500);
                 log.info("send {}", i);
             }
@@ -91,6 +102,6 @@ public class ProducerTest extends RocketMQTestCaseSupport {
 
         log.info("成功：{}", successCount);
 
-        Thread.sleep(10000l);
+        Thread.sleep(5000l);
     }
 }

@@ -16,6 +16,7 @@ import test.org.evan.libraries.rocketmq.support.model.MessageStatBO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.net.SocketAddress;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -82,6 +83,10 @@ public class ConsumerDataStater {
             consumerDataCountTmpStore.put(messageStatBO);
 
             for (MessageExt messageExt : msgs) {
+                SocketAddress socketAddress = messageExt.getStoreHost();
+
+                String key = messageQueue.getBrokerName() + "-" + messageQueue.getTopic() + "-" + socketAddress;
+
                 Demo demo = JSON.parseObject(messageExt.getBody(), Demo.class);
 
                 Map<String, Object> map = new HashMap();
@@ -92,13 +97,14 @@ public class ConsumerDataStater {
 
                 listOperations.rightPush("total", map);
 
-                if (hashOperations.hasKey("total2", messageExt.getMsgId())) {
+                if (hashOperations.hasKey("total_no_duplicate", messageExt.getMsgId())) {
                     operationsDuplicate.rightPush("duplicate", map);
                 } else {
-                    hashOperations.put("total2", messageExt.getMsgId(), map);
+                    hashOperations.put("total_no_duplicate", messageExt.getMsgId(), map);
+                    hashOperations.put("total_no_duplicate_byid", demo.getId() + "", map);
                 }
 
-                listOperations.rightPush(messageQueue.getBrokerName() + "-" + messageQueue.getTopic(), map);
+                hashOperations.put(key, messageExt.getMsgId(), map);
                 //consumerDataTmpStore.put(messageExt);
             }
 

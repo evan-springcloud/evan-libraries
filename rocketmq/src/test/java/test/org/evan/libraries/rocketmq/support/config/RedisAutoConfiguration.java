@@ -18,7 +18,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @EnableCaching
-public class RedisConfig {
+public class RedisAutoConfiguration {
     private static StringRedisSerializer keySerializer = new StringRedisSerializer();
     private static GenericFastJsonRedisSerializer valueSerializer = new GenericFastJsonRedisSerializer();
 
