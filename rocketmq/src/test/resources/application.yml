@@ -22,7 +22,7 @@ rocketmq:
   producer:
     group: producerGroup
     #retryNextServer: true # 当主从同步失败FLUSH_SLAVE_TIMEOUT时，消息会发送到另外一个broker造成消息重复
-    sendMessageTimeout: 120000  #该值少于心跳，在master掉线瞬间会偶发的抛出new RemotingTooMuchRequestException("sendDefaultImpl call timeout")，但是消息却还是偶发的能被消费
+    #sendMessageTimeout: 120000  #该值少于心跳，在master掉线瞬间会偶发的抛出new RemotingTooMuchRequestException("sendDefaultImpl call timeout")，但是消息却还是偶发的能被消费
     #retryTimesWhenSendFailed: 5
     #retryTimesWhenSendAsyncFailed: 0
 

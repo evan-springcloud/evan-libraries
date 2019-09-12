@@ -47,7 +47,7 @@ public class ProducerTest extends RocketMQTestCaseSupport {
     public void test() throws InterruptedException {
         int successCount = 0;
 
-        int sendCount = 40000;
+        int sendCount = 8000;
 
         for (int i = 0; i < sendCount; i++) {
             Demo demo = new Demo(Long.valueOf(i));
