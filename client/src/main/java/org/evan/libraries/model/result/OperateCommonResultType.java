@@ -47,4 +47,6 @@ public interface OperateCommonResultType {
      */
     OperateResultType ACCOUNT_FROZENED = new OperateResultType("ACCOUNT_FROZENED", "登录失败，账户被冻结");
 
+    OperateResultType REMOTING_ADDR_WRONG = new OperateResultType("REMOTING_ADDR_WRONG", "客户端地址不正确，请重新登录");
+
 }

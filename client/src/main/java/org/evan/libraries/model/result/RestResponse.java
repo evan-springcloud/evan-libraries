@@ -84,7 +84,7 @@ public class RestResponse<T> extends OperateResult<T> implements Serializable {
 
     @Override
     public String toString() {
-        return "ApiResponse{" +
+        return "RestResponse{" +
                 "page=" + page +
                 "} " + super.toString();
     }

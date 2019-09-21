@@ -1,0 +1,289 @@
+package org.evan.libraries.rest.exception;
+
+import org.apache.commons.lang3.StringUtils;
+import org.evan.libraries.exception.ServiceException;
+import org.evan.libraries.model.result.OperateCommonResultType;
+import org.evan.libraries.model.result.RestResponse;
+import org.evan.libraries.rest.authority.NoLoginException;
+import org.evan.libraries.rest.authority.RemotingAddrExcetion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.Set;
+
+public class GlobalExceptionHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    private static final String WARN = "WARN";
+    private static final String ERROR = "ERROR";
+
+    @ExceptionHandler(value = Exception.class)
+    public Object handleExceptionExtent(Exception ex, WebRequest request) {
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.ERROR.getCode());
+        res.setMsg("系统维护中，请稍候再试");
+
+        return handleExceptionInternal(ex, res, null, request, ERROR);
+    }
+
+    /**
+     * 业务异常处理
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = ServiceException.class)
+    public Object handleServiceException(ServiceException ex, WebRequest request) {
+        RestResponse res = RestResponse.create();
+        res.setCode(ex.getCode());
+        res.setMsg(ex.getMessage());
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    /**
+     * 参数不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    public Object handleExceptionExtent(IllegalArgumentException ex, WebRequest request) {
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg(ex.getMessage());
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    /**
+     * 请求地址不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {NoHandlerFoundException.class})
+    public Object handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.HTTP_URL_INVALID.getCode());
+        res.setMsg("请求的地址[" + ex.getRequestURL() + "]不正确," + ex.getMessage());
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    /**
+     * HTTP请求参数不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public Object handleMethodArgumentNotValid(MethodArgumentNotValidException ex, WebRequest request) {
+
+
+        BindingResult bindingResult = ex.getBindingResult();
+
+        StringBuilder sb = new StringBuilder(128);
+        for (FieldError error : bindingResult.getFieldErrors()) {
+            sb.append("," + error.getField() + error.getDefaultMessage());
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(0);
+        }
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg(sb.toString());
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    /**
+     * HTTP 请求方式不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    public Object handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, WebRequest request) {
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.HTTP_METHOD_INVALID.getCode());
+        res.setMsg("请求的 Http Method [" + ex.getMethod() + "] 不支持, 支持的methods" + ex.getSupportedHttpMethods());
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    /**
+     * Http请求格式不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {HttpMediaTypeNotSupportedException.class})
+    public Object handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        List<MediaType> mediaTypes = ex.getSupportedMediaTypes();
+        if (!CollectionUtils.isEmpty(mediaTypes)) {
+            headers.setAccept(mediaTypes);
+        }
+
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.HTTP_MEDIA_TYPE_INVALID.getCode());
+        res.setMsg("请求的 media [" + ex.getContentType() + "] 不支持, 支持的 MEDIA_TYPE " + ex.getSupportedMediaTypes());
+
+        return handleExceptionInternal(ex, res, headers, request);
+    }
+
+    /**
+     * Http请求参数绑定不正确
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {BindException.class})
+    public Object handleBindException(BindException ex, WebRequest request) {
+        List<FieldError> errors = ex.getFieldErrors();
+
+        StringBuilder sb = new StringBuilder(128);
+        for (FieldError error : errors) {
+            sb.append("," + error.getField() + "->" + error.getDefaultMessage());
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(0);
+        }
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg("参数不正确, " + sb);
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    @ExceptionHandler(value = {ConstraintViolationException.class})
+    public Object handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        Set<ConstraintViolation<?>> errors = ex.getConstraintViolations();
+
+        StringBuilder sb = new StringBuilder(128);
+        for (ConstraintViolation<?> error : errors) {
+            sb.append("," + error.getPropertyPath() + error.getMessage());
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(0);
+        }
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg("参数不正确, " + sb);
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+    public Object handleConstraintViolationException(MethodArgumentTypeMismatchException ex,
+                                                     WebRequest request) {
+        MethodParameter methodParameter = ex.getParameter();
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg("参数[" + methodParameter.getParameterName() + "]不正确," + ex.getMessage());
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Object handleMissingServletRequestParameterException(MissingServletRequestParameterException ex,
+                                                                WebRequest request) {
+        String parameterName = ex.getParameterName();
+        String parameterType = ex.getParameterType();
+
+        RestResponse res = RestResponse.create();
+        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setMsg("参数[" + parameterName + "(" + parameterType + ")]不正确," + ex.getMessage());
+
+        return handleExceptionInternal(ex, res, null, request);
+    }
+
+    @ExceptionHandler(value = RemotingAddrExcetion.class)
+    public Object handleNoLoginException(RemotingAddrExcetion ex, HttpServletRequest request) {
+        LOGGER.warn(ex.getMessage());
+
+        RestResponse res = RestResponse.create();
+
+        NoLoginException noLoginException = new NoLoginException();
+        res.setCode(noLoginException.getCode());
+        res.setMsg(ex.getMessage());
+        ResponseEntity<RestResponse> responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    /**
+     * 异常统一输出
+     *
+     * @param ex
+     * @param body
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected Object handleExceptionInternal(Exception ex, Object body,
+                                             HttpHeaders headers, WebRequest request, String level) {
+        if (StringUtils.isBlank(level)) {
+            level = WARN;
+        }
+        if (StringUtils.equalsIgnoreCase(level, WARN)) {
+            LOGGER.warn(ex.getMessage());
+        } else {
+            LOGGER.error(ex.getMessage(), ex);
+        }
+
+        setExceptionToRequest(request, ex);
+
+        return new ResponseEntity<>(body, headers, HttpStatus.OK);
+    }
+
+    /**
+     * @param ex
+     * @param body
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected Object handleExceptionInternal(Exception ex, Object body,
+                                             HttpHeaders headers, WebRequest request) {
+        return handleExceptionInternal(ex, body, headers, request, WARN);
+    }
+
+    private void setExceptionToRequest(WebRequest request, Exception ex) {
+        request.setAttribute("exception", ex, WebRequest.SCOPE_REQUEST);
+    }
+}

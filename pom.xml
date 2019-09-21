@@ -18,9 +18,9 @@
         <module>client</module>
         <module>utils</module>
         <module>redis</module>
-        <module>rest/rest-client</module>
         <module>orm</module>
         <module>rocketmq</module>
+        <module>web</module>
     </modules>
 
     <properties>
