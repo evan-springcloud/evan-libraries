@@ -27,6 +27,10 @@ public class RandomDataUtil {
         return random.nextInt(max);
     }
 
+    public static long randomLong(int max) {
+        return random.nextInt(max);
+    }
+
     public static String randomString(int length) {
         int max = (int) Math.pow(10, length);
         int int1 = random.nextInt(max - 1);
