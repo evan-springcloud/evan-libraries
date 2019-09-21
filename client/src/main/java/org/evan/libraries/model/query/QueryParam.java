@@ -3,55 +3,58 @@ package org.evan.libraries.model.query;
 /**
  * 查询参数
  */
-public interface QueryParam{
-	/**
-	 * 排序表达式
-	 */
-	String getSort();
+public interface QueryParam {
 
-	/**
-	 * 排序标识，可将排序标识转换为排序表单式，对调用者不公开排序表达式
-	 */
-	String getSortCode();
+    int DEFAULT_PAGE_SIZE = 10;
 
-	/**
-	 * 当前页 从1开始
-	 */
-	int getPageNo();
+    /**
+     * 排序表达式
+     */
+    String getSort();
 
-	/**
-	 * 每页记录数
-	 */
-	int getPageSize();
+    /**
+     * 排序标识，可将排序标识转换为排序表单式，对调用者不公开排序表达式
+     */
+    String getSortCode();
 
-	void setPageSize(int pageSize);
+    /**
+     * 当前页 从1开始
+     */
+    int getPageNo();
 
-	/**
-	 * 开始记录 从1开始
-	 */
-	int getStartRow();
+    /**
+     * 每页记录数
+     */
+    int getPageSize();
 
-	/**
-	 * 结束记录
-	 */
-	int getEndRow();
+    void setPageSize(int pageSize);
 
-	/**
-	 * select列
-	 */
-	String[] getColumns();
+    /**
+     * 开始记录 从1开始
+     */
+    int getStartRow();
 
-	/**
-	 * 是否按默认排序<br>
-	 * <br>
-	 * 默认 true
-	 */
-	boolean isSortByDefault();
+    /**
+     * 结束记录
+     */
+    int getEndRow();
 
-	/**
-	 * 是否包含已逻辑删除的数据<br>
-	 * <br>
-	 * 默认 false
-	 */
-	boolean isIncludeDeleted();
+    /**
+     * select列
+     */
+    String[] getColumns();
+
+    /**
+     * 是否按默认排序<br>
+     * <br>
+     * 默认 true
+     */
+    boolean isSortByDefault();
+
+    /**
+     * 是否包含已逻辑删除的数据<br>
+     * <br>
+     * 默认 false
+     */
+    boolean isIncludeDeleted();
 }

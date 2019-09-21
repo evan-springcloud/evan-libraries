@@ -22,7 +22,6 @@ public class OperateResult<T> implements Serializable {
 
     private String code = DEFAULT_CODE;
     private String msg = DEFAULT_MSG;
-    private String serversion;
     private T data;
 
     protected OperateResult() {
@@ -113,7 +112,6 @@ public class OperateResult<T> implements Serializable {
         return "OperateResult{" +
                 "code='" + code + '\'' +
                 ", msg='" + msg + '\'' +
-                ", serversion='" + serversion + '\'' +
                 ", data=" + data +
                 '}';
     }
