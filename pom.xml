@@ -140,16 +140,23 @@
     </repositories>
 
     <distributionManagement>
+<!--        <repository>-->
+<!--            <id>nexus-releases</id>-->
+<!--            <name>Internal Releases</name>-->
+<!--            <url>http://120.27.218.59:8081/repository/maven-releases</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id>-->
+<!--            <name>Internal Snapshots</name>-->
+<!--            <url>http://120.27.218.59:8081/repository/maven-snapshots</url>-->
+<!--        </snapshotRepository>-->
         <repository>
-            <id>nexus-releases</id>
-            <name>Internal Releases</name>
-            <url>http://120.27.218.59:8081/repository/maven-releases</url>
+            <id>releases</id>
+            <url>http://116.62.106.105:8081/nexus/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Internal Snapshots</name>
-            <url>http://120.27.218.59:8081/repository/maven-snapshots</url>
+            <id>snapshots</id>
+            <url>http://116.62.106.105:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
 </project>
