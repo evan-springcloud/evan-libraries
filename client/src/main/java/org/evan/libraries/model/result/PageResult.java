@@ -27,19 +27,19 @@ public class PageResult<T> implements Serializable {
     private PageResult() {
     }
 
-    private PageResult(QueryParam query) {
+    public PageResult(QueryParam query) {
         pageNo = query.getPageNo();
         pageSize = query.getPageSize();
         this.query = query;
     }
 
-    public static <T> PageResult<T> create(QueryParam query) {
-        PageResult<T> result = new PageResult<T>(query);
-        return result;
-    }
+//    public static <T> PageResult<T> create(QueryParam query) {
+//        PageResult<T> result = new PageResult<>(query);
+//        return result;
+//    }
 
     public static <T> PageResult<T> create(QueryParam query, List<T> data, long recordCount) {
-        PageResult<T> result = new PageResult<T>(query);
+        PageResult<T> result = new PageResult<>(query);
         result.setData(data);
         result.setRecordCount(recordCount);
         return result;

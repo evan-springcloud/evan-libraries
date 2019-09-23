@@ -1,11 +1,11 @@
-package org.evan.libraries.rest.exception;
+package org.evan.libraries.web.exception;
 
 import org.apache.commons.lang3.StringUtils;
 import org.evan.libraries.exception.ServiceException;
 import org.evan.libraries.model.result.OperateCommonResultType;
 import org.evan.libraries.model.result.RestResponse;
-import org.evan.libraries.rest.authority.NoLoginException;
-import org.evan.libraries.rest.authority.RemotingAddrExcetion;
+import org.evan.libraries.web.authority.NoLoginException;
+import org.evan.libraries.web.authority.RemotingAddrExcetion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;

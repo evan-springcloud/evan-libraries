@@ -1,4 +1,4 @@
-package org.evan.libraries.rest.csrf;
+package org.evan.libraries.web.csrf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

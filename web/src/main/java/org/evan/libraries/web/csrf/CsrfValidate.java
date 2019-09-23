@@ -1,4 +1,4 @@
-package org.evan.libraries.rest.csrf;
+package org.evan.libraries.web.csrf;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

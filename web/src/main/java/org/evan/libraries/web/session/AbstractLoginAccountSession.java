@@ -1,6 +1,6 @@
-package org.evan.libraries.rest.session;
+package org.evan.libraries.web.session;
 
-import org.evan.libraries.model.CurrentLoginAccount;
+import org.evan.libraries.model.AbstractLoginAccount;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author shen.wei
  * @version %I%, %G%
  */
-public abstract class AbstractLoginAccountSession<T extends CurrentLoginAccount> implements LoginAccountSession {
+public abstract class AbstractLoginAccountSession<T extends AbstractLoginAccount> implements LoginAccountSession {
 
     @Override
     public abstract T get(HttpServletRequest request);

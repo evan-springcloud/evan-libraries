@@ -1,8 +1,8 @@
-package org.evan.libraries.rest.authority;
+package org.evan.libraries.web.authority;
 
 import org.evan.libraries.exception.PermissionDeniedException;
-import org.evan.libraries.model.CurrentLoginAccount;
-import org.evan.libraries.rest.utils.Excludor;
+import org.evan.libraries.model.AbstractLoginAccount;
+import org.evan.libraries.web.utils.Excludor;
 import org.evan.libraries.utils.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +40,9 @@ public abstract class LoginAccountAuthInterceptor implements HandlerInterceptor 
 
     protected UrlPathHelper urlPathHelper;
 
-    public abstract boolean pass(CurrentLoginAccount user, Method handlerMethod);
+    public abstract boolean pass(AbstractLoginAccount user, Method handlerMethod);
 
-    public abstract CurrentLoginAccount getLoginUser();
+    public abstract AbstractLoginAccount getLoginUser();
 
     public void init() {
         if (excludor == null) {
@@ -65,7 +65,7 @@ public abstract class LoginAccountAuthInterceptor implements HandlerInterceptor 
             if (log.isDebugEnabled()) {
                 log.debug("validate login user in servlet [" + requestPath + "]");
             }
-            CurrentLoginAccount loginUser = getLoginUser();
+            AbstractLoginAccount loginUser = getLoginUser();
             if (loginUser == null) {
                 if (log.isDebugEnabled()) {
                     log.debug("No login in servlet [" + requestPath + "]");

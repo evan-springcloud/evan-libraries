@@ -2,7 +2,7 @@ package test.org.evan.libraries.cache.support;
 
 import net.sf.ehcache.CacheManager;
 import org.evan.libraries.cache.AbstractCache;
-import org.evanframework.cache.RedisTemplateCreator;
+import org.evan.libraries.redis.RedisTemplateCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;

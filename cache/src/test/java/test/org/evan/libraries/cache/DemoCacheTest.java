@@ -1,6 +1,7 @@
 package test.org.evan.libraries.cache;
 
 import net.sf.ehcache.CacheManager;
+import org.evan.libraries.redis.RedisTemplateCreator;
 import test.org.evan.libraries.cache.support.Demo;
 import test.org.evan.libraries.cache.support.DemoCache;
 import org.junit.Before;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author evan.shen
@@ -24,13 +24,13 @@ public class DemoCacheTest {
         demoCache = new DemoCache();
         CacheManager cacheManager = new CacheManager();
 
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        JedisPoolConfig config = new JedisPoolConfig();
-        factory.setPoolConfig(config);
-        RedisTemplateCreator redisTemplateCreator = new RedisTemplateCreator(factory);
-
-        demoCache.setCacheManager(cacheManager);
-        demoCache.setRedisTemplateCreator(redisTemplateCreator);
+//        JedisConnectionFactory factory = new JedisConnectionFactory();
+//        JedisPoolConfig config = new JedisPoolConfig();
+//        factory.setPoolConfig(config);
+//        RedisTemplateCreator redisTemplateCreator = new RedisTemplateCreator(factory);
+//
+//        demoCache.setCacheManager(cacheManager);
+//        demoCache.setRedisTemplateCreator(redisTemplateCreator);
 
         demoCache.init();
     }
@@ -62,16 +62,16 @@ class ThreadGet implements Runnable {
     private DemoCache demoCache;
 
     public ThreadGet() {
-        demoCache = new DemoCache();
-
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        JedisPoolConfig config = new JedisPoolConfig();
-        factory.setPoolConfig(config);
-        RedisTemplateCreator redisTemplateCreator = new RedisTemplateCreator(factory);
-
-        demoCache.setRedisTemplateCreator(redisTemplateCreator);
-
-        demoCache.init();
+//        demoCache = new DemoCache();
+//
+//        JedisConnectionFactory factory = new JedisConnectionFactory();
+//        JedisPoolConfig config = new JedisPoolConfig();
+//        factory.setPoolConfig(config);
+//        RedisTemplateCreator redisTemplateCreator = new RedisTemplateCreator(factory);
+//
+//        demoCache.setRedisTemplateCreator(redisTemplateCreator);
+//
+//        demoCache.init();
     }
 
     @Override

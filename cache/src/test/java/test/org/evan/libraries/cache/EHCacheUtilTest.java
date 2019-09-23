@@ -1,5 +1,6 @@
 package test.org.evan.libraries.cache;
 
+import org.evan.libraries.cache.EHCacheUtil;
 import test.org.evan.libraries.cache.support.Demo;
 import test.org.evan.libraries.cache.support.DemoData;
 import net.sf.ehcache.CacheManager;

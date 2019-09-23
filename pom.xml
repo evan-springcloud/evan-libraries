@@ -18,8 +18,10 @@
         <module>client</module>
         <module>utils</module>
         <module>redis</module>
+        <module>cache</module>
         <module>orm</module>
         <module>rocketmq</module>
+        <module>restclient</module>
         <module>web</module>
     </modules>
 

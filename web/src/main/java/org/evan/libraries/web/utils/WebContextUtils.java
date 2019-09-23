@@ -1,4 +1,4 @@
-package org.evan.libraries.rest.utils;
+package org.evan.libraries.web.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -68,7 +68,7 @@ public class WebContextUtils {
             //appServer = sysConfig.get("app.host");// app_host  配置在配置文件中
 
             //if (StringUtils.isBlank(appServer)) {
-                appServer = HttpUtils.getAppURL(request);
+                appServer = HttpUtil.getAppURL(request);
             //}
         }
         return appServer;

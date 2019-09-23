@@ -37,6 +37,7 @@ import java.io.Serializable;
  *
  * @since 1.0
  */
+@Deprecated
 public class CacheUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtil.class);
     //private static final ConcurrentHashMap<String, CacheUtil> cacheUtilPool = new ConcurrentHashMap<String, CacheUtil>(128);

@@ -2,9 +2,8 @@ package org.evan.libraries.cache;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
-import org.evanframework.ehcache.EHCacheUtil;
-import org.evanframework.redis.RedisTemplateCreator;
-import org.evanframework.redis.RedisUtil;
+import org.evan.libraries.redis.RedisTemplateCreator;
+import org.evan.libraries.redis.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +35,7 @@ import java.lang.reflect.Type;
  * @version %I%, %G%
  * @since 1.0
  */
+@Deprecated
 public abstract class AbstractCache<T> {
     private static final Logger logger = LoggerFactory.getLogger(AbstractCache.class);
 

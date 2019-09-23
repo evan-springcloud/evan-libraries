@@ -1,7 +1,7 @@
-package org.evan.libraries.rest.session;
+package org.evan.libraries.web.session;
 
-import org.evan.libraries.rest.utils.Excludor;
-import org.evan.libraries.rest.utils.WebContextUtils;
+import org.evan.libraries.web.utils.Excludor;
+import org.evan.libraries.web.utils.WebContextUtils;
 import org.evan.libraries.utils.PathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
