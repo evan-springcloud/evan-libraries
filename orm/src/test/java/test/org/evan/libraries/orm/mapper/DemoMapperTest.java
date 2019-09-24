@@ -1,8 +1,10 @@
 package test.org.evan.libraries.orm.mapper;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.evan.libraries.model.result.PageResult;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import test.org.evan.libraries.orm.support.MySQLTestCaseSupport;
@@ -12,6 +14,7 @@ import test.org.evan.libraries.orm.support.model.DemoQuery;
 import test.org.evan.libraries.orm.support.testdata.TestData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +25,15 @@ public class DemoMapperTest extends MySQLTestCaseSupport {
 
     @Test
     public void testLoad() {
-        Demo demo = demoMapper.load(1L);
-        LOGGER.info(demo + "");
+        Demo demo = demoMapper.selectById(1L);
+        LOGGER.info(">>>> demoMapper.selectById(1)={}", demo);
+
+        List idList = new ArrayList();
+        idList.add(50);
+        idList.add(60);
+        List<Demo> demos = demoMapper.selectBatchIds(idList);
+
+        LOGGER.info(">>>> demoMapper.selectBatchIds({})={}", idList, demos);
     }
 
     @Test
@@ -49,6 +59,8 @@ public class DemoMapperTest extends MySQLTestCaseSupport {
         demo.setFieldHtmleditor("aaa");
 
         demoMapper.update(demo);
+
+
     }
 
     @Test
@@ -76,8 +88,13 @@ public class DemoMapperTest extends MySQLTestCaseSupport {
 //        );
 //        demoQuery.setJoinDemoChild1(true);
         List<Demo> demos = demoMapper.queryList(demoQuery);
-
         LOGGER.info(demos.size() + "");
+
+//        QueryWrapper<Demo> queryWrapper = new QueryWrapper();
+//        queryWrapper.eq("fieldName","a");
+//        queryWrapper.
+//
+//        LOGGER.info(demos.size() + "");
     }
 
     @Test
@@ -97,14 +114,40 @@ public class DemoMapperTest extends MySQLTestCaseSupport {
         DemoQuery demoQuery = new DemoQuery();
 
         //demoQuery.setFieldText("1");
-//        demoQuery.setPageNo(2);
-//        demoQuery.setPageSize(4);
-//        demoQuery.setJoinDemoChild1(true);
+        demoQuery.setPageNo(2);
+        demoQuery.setPageSize(5);
 
         int count = demoMapper.queryCount(demoQuery);
         List<Demo> demos = demoMapper.queryList(demoQuery);
+
+        PageResult<Demo> pageResult = PageResult.create(demoQuery, demos, count);
+
+        LOGGER.info(pageResult.toString());
+
+
+//        Page page = PageHelper.startPage(demoQuery.getPageNo(), demoQuery.getPageSize());
+//        demos = demoMapper.queryList(demoQuery);
+//        PageInfo<Demo> demoPage = new PageInfo<>(page.getResult());
+//        pageResult = PageResult.create(demoQuery, demos, page.getTotal());
+//
+//        LOGGER.info(demoPage.toString());
+
+//        demoQuery.setJoinDemoChild1(true);
+
+//        Page page = new Page();
+//        page.setCurrent(demoQuery.getPageNo());
+//        page.setSize(demoQuery.getPageSize());
+//
+//        IPage<Demo> demoPage = demoMapper.queryList(page,demoQuery);
+//        LOGGER.info("{},{},{}",demoPage.getPages(),demoPage.getTotal());
+
+
         //PageResult<Demo> pageResult = PageResult.create(demoQuery, demos, count);
 
         //log.info(pageResult.toString());
+
+
     }
+
+
 }

@@ -1,5 +1,6 @@
 package test.org.evan.libraries.orm.support;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -13,5 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
         "test.org.evan.libraries.orm.support.config",
         "test.org.evan.libraries.orm.support.jdbc"
 })
+@MapperScan(basePackages = {
+        "test.org.evan.libraries.orm.support.mapper",
+}) //mybatis mapper 所在package
 public class MySQLTestBeansConfig {
 }

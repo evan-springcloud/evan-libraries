@@ -62,6 +62,11 @@
             <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 
         <!--test begin -->
         <dependency>
@@ -97,6 +102,7 @@
             <version>0.9.5.4</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>

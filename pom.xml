@@ -40,9 +40,9 @@
         <logback.version>1.2.2</logback.version>
         <junit.version>4.12</junit.version>
         <mybatis.version>3.4.4</mybatis.version>
-        <pagehelper.version>4.1.6</pagehelper.version>
+        <pagehelper.version>5.1.10</pagehelper.version>
         <mysql.version>5.1.41</mysql.version>
-        <druid.version>1.0.28</druid.version>
+        <druid.version>1.1.20</druid.version>
         <sessionRedis.version>1.2.2.RELEASE</sessionRedis.version>
         <fastjson.version>1.2.17</fastjson.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>

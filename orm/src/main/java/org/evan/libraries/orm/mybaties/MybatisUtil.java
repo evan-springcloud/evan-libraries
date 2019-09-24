@@ -40,7 +40,7 @@ public class MybatisUtil {
         bean.setVfs(SpringBootVFS.class);
 
         Properties properties = new Properties();
-        //properties.put("Oracle", "oracle");
+        properties.put("Oracle", "oracle");
         properties.put("MySQL", "mysql");
         VendorDatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider();
         databaseIdProvider.setProperties(properties);

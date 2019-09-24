@@ -285,6 +285,8 @@ public class Demo implements Serializable {
         this.fieldHtmleditorCut = fieldHtmleditorCut;
     }
 
+    
+
     @Override
     public String toString() {
         return "Demo{" +
