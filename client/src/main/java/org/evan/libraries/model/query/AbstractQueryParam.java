@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * 查询参数父类
+ * 查询参数基类
  */
 public abstract class AbstractQueryParam implements Serializable, QueryParam {
     private static final long serialVersionUID = 2941991018140190485L;

@@ -2,10 +2,10 @@ package org.evan.libraries.model.result;
 
 
 /**
- * 公用的返回类型，各子系统各业务模块可以继承该类
+ * 公用的返回结果，各子系统各业务模块可以继承该类（此处不用枚举，枚举不能继承）
  * Created by shen.wei on 2017/4/24.
  */
-public interface OperateCommonResultType {
+public interface OperateResultConstants {
     /**
      * 成功
      */

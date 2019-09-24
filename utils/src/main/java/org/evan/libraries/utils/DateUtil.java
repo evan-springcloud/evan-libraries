@@ -11,7 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 日期工具
  *
  * @author shen.wei
- * @version Date: 2010-10-16 上午11:23:38
+ * @version Date: 2015-10-16 上午11:23:38
+ * @since 1.0
  */
 public class DateUtil {
 

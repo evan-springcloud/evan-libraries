@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 业务服务层操作结果封装
  * <p>
- * create at 2016年4月3日 下午3:25:51
+ * create at 2017年4月3日 下午3:25:51
  *
  * @author shen.wei
  * @version %I%, %G%
@@ -15,7 +15,7 @@ import java.util.Map;
 public class OperateResult<T> implements Serializable {
     private static final long serialVersionUID = 2941991018140190488L;
 
-    private static final OperateResultType DEFAULT_RESULT = OperateCommonResultType.SUCCESS;
+    private static final OperateResultType DEFAULT_RESULT = OperateResultConstants.SUCCESS;
 
     private static final String DEFAULT_CODE = DEFAULT_RESULT.getCode();
     private static final String DEFAULT_MSG = DEFAULT_RESULT.getMsg();

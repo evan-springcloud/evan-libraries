@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
- * EHCache工具类, Created by evan.shen on 2017/3/16.
- *
+ * EHCache工具类
+ * <p>实现进程内缓存
+ * <p>Created by evan.shen on 2017/3/16.
  * @since 1.0
  */
 public class EHCacheUtil {

@@ -2,7 +2,7 @@ package org.evan.libraries.web.exception;
 
 import org.apache.commons.lang3.StringUtils;
 import org.evan.libraries.exception.ServiceException;
-import org.evan.libraries.model.result.OperateCommonResultType;
+import org.evan.libraries.model.result.OperateResultConstants;
 import org.evan.libraries.model.result.RestResponse;
 import org.evan.libraries.web.authority.NoLoginException;
 import org.evan.libraries.web.authority.RemotingAddrExcetion;
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Object handleExceptionExtent(Exception ex, WebRequest request) {
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.ERROR.getCode());
+        res.setCode(OperateResultConstants.ERROR.getCode());
         res.setMsg("系统维护中，请稍候再试");
 
         return handleExceptionInternal(ex, res, null, request, ERROR);
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     public Object handleExceptionExtent(IllegalArgumentException ex, WebRequest request) {
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg(ex.getMessage());
         return handleExceptionInternal(ex, res, null, request);
     }
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
     public Object handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.HTTP_URL_INVALID.getCode());
+        res.setCode(OperateResultConstants.HTTP_URL_INVALID.getCode());
         res.setMsg("请求的地址[" + ex.getRequestURL() + "]不正确," + ex.getMessage());
         return handleExceptionInternal(ex, res, null, request);
     }
@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
         }
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg(sb.toString());
 
         return handleExceptionInternal(ex, res, null, request);
@@ -134,7 +134,7 @@ public class GlobalExceptionHandler {
     public Object handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, WebRequest request) {
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.HTTP_METHOD_INVALID.getCode());
+        res.setCode(OperateResultConstants.HTTP_METHOD_INVALID.getCode());
         res.setMsg("请求的 Http Method [" + ex.getMethod() + "] 不支持, 支持的methods" + ex.getSupportedHttpMethods());
 
         return handleExceptionInternal(ex, res, null, request);
@@ -157,7 +157,7 @@ public class GlobalExceptionHandler {
 
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.HTTP_MEDIA_TYPE_INVALID.getCode());
+        res.setCode(OperateResultConstants.HTTP_MEDIA_TYPE_INVALID.getCode());
         res.setMsg("请求的 media [" + ex.getContentType() + "] 不支持, 支持的 MEDIA_TYPE " + ex.getSupportedMediaTypes());
 
         return handleExceptionInternal(ex, res, headers, request);
@@ -183,7 +183,7 @@ public class GlobalExceptionHandler {
         }
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg("参数不正确, " + sb);
 
         return handleExceptionInternal(ex, res, null, request);
@@ -202,7 +202,7 @@ public class GlobalExceptionHandler {
         }
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg("参数不正确, " + sb);
 
         return handleExceptionInternal(ex, res, null, request);
@@ -214,7 +214,7 @@ public class GlobalExceptionHandler {
         MethodParameter methodParameter = ex.getParameter();
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg("参数[" + methodParameter.getParameterName() + "]不正确," + ex.getMessage());
 
         return handleExceptionInternal(ex, res, null, request);
@@ -227,7 +227,7 @@ public class GlobalExceptionHandler {
         String parameterType = ex.getParameterType();
 
         RestResponse res = RestResponse.create();
-        res.setCode(OperateCommonResultType.PARAMETER_INVALID.getCode());
+        res.setCode(OperateResultConstants.PARAMETER_INVALID.getCode());
         res.setMsg("参数[" + parameterName + "(" + parameterType + ")]不正确," + ex.getMessage());
 
         return handleExceptionInternal(ex, res, null, request);

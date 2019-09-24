@@ -16,7 +16,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
+ * AES加密工具
  * @author Evan.Shen
+ * @since 1.0
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class AESUtil {
