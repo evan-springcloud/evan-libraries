@@ -103,9 +103,9 @@ public class OperateResult<T> implements Serializable {
         this.data = data;
     }
 
-    public boolean isSuccess() {
-        return DEFAULT_CODE.equals(this.code);
-    }
+//    public boolean isSuccess() {
+//        return DEFAULT_CODE.equals(this.code);
+//    }
 
     @Override
     public String toString() {
