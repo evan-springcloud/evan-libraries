@@ -21,6 +21,7 @@
         <module>cache</module>
         <module>orm</module>
         <module>rocketmq</module>
+        <module>kafka</module>
         <module>restclient</module>
         <module>web</module>
     </modules>
