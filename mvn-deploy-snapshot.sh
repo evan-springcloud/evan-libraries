@@ -2,6 +2,6 @@
 #!/bin/sh
 ####################
 
-echo "Begin deploy......"
+echo "Begin deploy snapshot ......"
 
-mvn clean deploy -Dmaven.test.skip=true 
+mvn clean deploy -Dmaven.test.skip=true

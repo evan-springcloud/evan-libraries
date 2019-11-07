@@ -15,13 +15,13 @@
         <dependency>
             <groupId>org.evan.libraries</groupId>
             <artifactId>evan-libraries-client</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.evan.libraries</groupId>
             <artifactId>evan-libraries-utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>

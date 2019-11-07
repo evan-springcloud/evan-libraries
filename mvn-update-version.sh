@@ -9,8 +9,10 @@ if [ ! -n "$version" ]; then
 	read version
 fi
 
-echo "Update version is $version"
+echo "Update version is $version-SNAPSHOT"
 
-mvn versions:set -DnewVersion=$version -pl ./
+mvn versions:set -DnewVersion=${version}-SNAPSHOT -DgenerateBackupPoms=false -pl ./
 
-mvn versions:commit
+#mvn -f "pom.xml" versions:set -DoldVersion=* -DnewVersion=1.2.0-SNAPSHOT -DprocessAllModules=true -DallowSnapshots=true -DgenerateBackupPoms=true
+
+#mvn versions:commit

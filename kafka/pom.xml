@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.evan.libraries</groupId>
             <artifactId>evan-libraries-utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!--test begin -->
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>org.evan.libraries</groupId>
             <artifactId>evan-libraries-redis</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
 
