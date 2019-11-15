@@ -15,10 +15,9 @@ import java.util.Map;
 public class OperateResult<T> implements Serializable {
     private static final long serialVersionUID = 2941991018140190488L;
 
-    private static final OperateResultType DEFAULT_RESULT = OperateResultConstants.SUCCESS;
-
-    private static final String DEFAULT_CODE = DEFAULT_RESULT.getCode();
-    private static final String DEFAULT_MSG = DEFAULT_RESULT.getMsg();
+    public static final OperateResultType DEFAULT_RESULT = OperateResultConstants.SUCCESS;
+    public static final String DEFAULT_CODE = DEFAULT_RESULT.getCode();
+    public static final String DEFAULT_MSG = DEFAULT_RESULT.getMsg();
 
     private String code = DEFAULT_CODE;
     private String msg = DEFAULT_MSG;
