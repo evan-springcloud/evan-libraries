@@ -11,7 +11,7 @@
 
     <groupId>org.evan.libraries</groupId>
     <artifactId>evan-libraries</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -19,6 +19,8 @@
         <module>utils</module>
         <module>redis</module>
         <module>cache</module>
+        <module>oauth/model</module>
+        <module>oauth/web</module>
         <module>orm</module>
         <module>rocketmq</module>
         <module>kafka</module>
@@ -102,6 +104,19 @@
                     <execution>
                         <id>attach-sources</id>
                         <phase>deploy</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>

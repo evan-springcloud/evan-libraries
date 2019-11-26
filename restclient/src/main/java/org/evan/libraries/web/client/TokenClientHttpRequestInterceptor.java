@@ -1,7 +1,7 @@
 package org.evan.libraries.web.client;
 
-import org.evan.libraries.model.AbstractLoginAccount;
-import org.evan.libraries.web.session.LoginAccountContext;
+import org.libraries.oauth.model.LoginAccount;
+import org.libraries.oauth.model.LoginAccountContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +25,7 @@ public class TokenClientHttpRequestInterceptor implements ClientHttpRequestInter
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
             throws IOException {
 
-        AbstractLoginAccount loginAccount = LoginAccountContext.get();
+        LoginAccount loginAccount = LoginAccountContext.get();
 
         HttpRequestWrapper requestWrapper = new HttpRequestWrapper(request);
         HttpHeaders headers = requestWrapper.getHeaders();

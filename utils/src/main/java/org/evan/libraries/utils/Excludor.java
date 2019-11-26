@@ -1,4 +1,4 @@
-package org.evan.libraries.web.utils;
+package org.evan.libraries.utils;
 
 import java.util.Collections;
 import java.util.HashSet;

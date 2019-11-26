@@ -1,16 +1,15 @@
-package org.evan.libraries.model;
+package org.libraries.oauth.model;
 
 
 import java.util.Date;
 
 /**
- * 当前登录用户
+ * 当前登录账号抽象类，不同的账号类型继承该类
  *
- * @author shen.wei
- * @version 2012-8-1 下午6:40:47
- * @since 1.0
+ * @author Evan.Shen
+ * @since 2019-11-26
  */
-public abstract class AbstractLoginAccount {
+public abstract class AbstractLoginAccount implements LoginAccount {
 
     private Long id;
     private String account;

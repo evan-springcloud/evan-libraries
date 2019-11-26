@@ -1,4 +1,4 @@
-package org.evan.libraries.web.authority;
+package org.libraries.oauth.web;
 
 
 import org.evan.libraries.exception.ServiceException;

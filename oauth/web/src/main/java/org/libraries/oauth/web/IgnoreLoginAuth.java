@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.evan.libraries.web.authority;
+package org.libraries.oauth.web;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

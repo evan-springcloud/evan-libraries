@@ -49,4 +49,6 @@ public interface OperateResultConstants {
 
     OperateResultType REMOTING_ADDR_WRONG = new OperateResultType("REMOTING_ADDR_WRONG", "客户端地址不正确，请重新登录");
 
+    OperateResultType NO_TOKEN = new OperateResultType("NO_TOKEN", "缺少token");
+
 }
