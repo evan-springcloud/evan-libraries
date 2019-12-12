@@ -4,9 +4,6 @@ import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.util.Assert;
@@ -27,16 +24,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class BeanUtil {
     private final static Map<Class<?>, Map<Class<?>, BeanCopier>> beanCopiers = new ConcurrentHashMap<>(128);
-    private static Mapper dozerBeanMapper;
+    private final static Mapper dozerBeanMapper;
 
     static {
         dozerBeanMapper = DozerBeanMapperBuilder.buildDefault();
 
-        ConvertUtilsBean convertUtils = BeanUtilsBean.getInstance().getConvertUtils();
-
-        DateConverter dateConverter = new DateConverter();
-        dateConverter.setPattern("yyyy-MM-dd HH:mm:ss");
-        convertUtils.register(dateConverter, String.class);
+//        ConvertUtilsBean convertUtils = BeanUtilsBean.getInstance().getConvertUtils();
+//
+//        DateConverter dateConverter = new DateConverter();
+//        dateConverter.setPattern("yyyy-MM-dd HH:mm:ss");
+//        convertUtils.register(dateConverter, String.class);
     }
 
 
@@ -75,6 +72,16 @@ public class BeanUtil {
     }
 
     /**
+     * 对象快速拷贝
+     */
+    public static void quickCopy(Object source, Object target) {
+        Assert.notNull(source, "source must not null");
+        Assert.notNull(target, "target must not null");
+        BeanCopier beanCopier = getBeanCopier(source.getClass(), target.getClass());
+        beanCopier.copy(source, target, null);
+    }
+
+    /**
      * 对象快速复制
      */
     public static <T> List<T> quickMapList(Collection<?> sourceList, Class<T> targetClass) {
@@ -92,21 +99,14 @@ public class BeanUtil {
                 beanCopier.copy(source, target, null);
                 targetList.add(target);
             }
-        } catch (Exception e) {
+        } catch (InstantiationException e) {
+            throw new UnsupportedOperationException("Class " + targetClass + "not hava constructor is no params", e);
+        } catch (IllegalAccessException e) {
             throw new UnsupportedOperationException("Class " + targetClass + "not hava constructor is no params", e);
         }
         return targetList;
     }
 
-    /**
-     * 对象快速拷贝
-     */
-    public static void quickCopy(Object source, Object target) {
-        Assert.notNull(source, "source must not null");
-        Assert.notNull(target, "target must not null");
-        BeanCopier beanCopier = getBeanCopier(source.getClass(), target.getClass());
-        beanCopier.copy(source, target, null);
-    }
 
     /**
      * 对象深拷贝

@@ -10,8 +10,13 @@
 - web web服务端
 
 
-##1.1 
-1、增加```RestListResponse```列表结果、```RestPageResponse```分页结果
+## 1.3
+1、增加通用查询参数`GeneralQueryParam`
 
-##1.2
+## 1.2
 1、增加oauth鉴权
+
+## 1.1 
+1、增加`RestListResponse`列表结果、`RestPageResponse`分页结果
+
+
