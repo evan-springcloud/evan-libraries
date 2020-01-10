@@ -108,6 +108,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
             if (StringUtil.equals(token, defaultToken)) {
                 tokenSecret = defaultTokenSecret;
+                LoginAccountSetter.remove();
             } else {
                 LoginAccount loginAccount = LoginAccountSession.get(request);
 
