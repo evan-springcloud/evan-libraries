@@ -10,8 +10,11 @@
 - web web服务端
 
 
+## 1.3.2
+1、fix 修复AESUtil解密时NumberFormatException没有处理的问题
+
 ## 1.3.1
-1、[fix] 对于请求是默认token的，应删除ThreadLocal的保存的会话
+1、fix 对于请求是默认token的，应删除ThreadLocal的保存的会话
 
 ## 1.3
 1、增加通用查询参数`GeneralQueryParam`
