@@ -10,6 +10,9 @@
 - web web服务端
 
 
+## 1.3.3
+1、fix 修复HttpUtil获取remoteAddr问题。由于多次反向代理后会有多个ip值，第一个ip才是真实ip，修复之后只返回第一个
+
 ## 1.3.2
 1、fix 修复AESUtil解密时NumberFormatException没有处理的问题
 

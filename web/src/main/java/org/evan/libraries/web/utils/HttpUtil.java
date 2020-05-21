@@ -2,6 +2,7 @@ package org.evan.libraries.web.utils;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.evan.libraries.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -403,26 +404,35 @@ public class HttpUtil {
     }
 
     /**
-     * 获取客户端Ip <br>
-     * 当通过apache代理方式部署时，request.getRemoteAddr()方法无法获取真实的ip
+     * 获取用户真实IP地址，不使用request.getRemoteAddr()的原因是有可能用户使用了代理软件方式避免真实IP地址
      *
      * @param request 客户端Ip
      */
     public static String getRemoteAddr(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        String ip = request.getHeader("X-Real-IP"); //nginx代理一般会加上此请求头
+
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) { //这是一个 Squid 开发的字段，只有在通过了HTTP代理或者负载均衡服务器时才会添加该项。　　　　
+            ip = request.getHeader("x-forwarded-for");
+            if (StringUtil.isNotBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                // 多次反向代理后会有多个ip值，第一个ip才是真实ip
+                if (ip.indexOf(",") != -1) {
+                    ip = ip.split(",")[0];
+                }
+            }
+        }
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) { //apache代理方式部署时
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {//apache代理方式部署时
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) { //apache代理方式部署时
             ip = request.getHeader("HTTP_CLIENT_IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) { //有些代理服务器会加上此请求头
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return ip;
