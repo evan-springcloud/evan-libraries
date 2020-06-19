@@ -1,0 +1,10 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: evan-libraries-kafka-producer
+  kafka:
+    producer:
+      acks: -1
+      retries: 2

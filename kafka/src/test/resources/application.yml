@@ -2,8 +2,8 @@ server:
   port: 9001
 
 spring:
-  application:
-    name: evan-libraries-kafka-test
+  profiles:
+    active: producer
   mvc:
     async:
        request-timeout: 30000
@@ -20,15 +20,8 @@ spring:
         max-wait: 5000ms
     timeout: 2000ms
   kafka:
-    bootstrap-servers: 47.111.68.241:9092,47.111.109.46:9092,121.40.241.102:9092
-    producer:
-      acks: -1
-      retries: 2
-    consumer:
-      group-id: test
-      auto-offset-reset: earliest
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#   bootstrap-servers: 47.111.68.241:9092,47.111.109.46:9092,121.40.241.102:9092
+    bootstrap-servers: 121.40.245.248:9092
 
 logging:
   pattern:

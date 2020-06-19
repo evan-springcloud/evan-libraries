@@ -74,6 +74,7 @@ public class ConsumerDataStater {
         map.put("partition", record.partition());
         map.put("key", key);
         map.put("value", record.value());
+        map.put("offset",record.offset());
 
         listOperations.rightPush("receive_total", map);
         listOperations.rightPush("receive_" + record.topic(), map);

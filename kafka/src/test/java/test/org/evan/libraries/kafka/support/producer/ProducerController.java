@@ -91,7 +91,8 @@ public class ProducerController {
                 demo.setFieldRadioEnum(SexEnum.WOMAN);
             }
 
-            int topicNo = i % 2;
+            //int topicNo = i % 2;
+            int topicNo = 0;
 
             String topic = "test_topic_" + topicNo;
 
