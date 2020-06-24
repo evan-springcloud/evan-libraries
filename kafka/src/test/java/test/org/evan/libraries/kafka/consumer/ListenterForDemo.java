@@ -1,4 +1,4 @@
-package test.org.evan.libraries.kafka.support.consumer;
+package test.org.evan.libraries.kafka.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,21 +1,21 @@
 package test.org.evan.libraries.kafka.testcase;
 
-        import lombok.extern.slf4j.Slf4j;
-        import org.springframework.boot.SpringApplication;
-        import org.springframework.boot.autoconfigure.SpringBootApplication;
-        import org.springframework.context.annotation.ComponentScan;
+import org.junit.Test;
+import test.org.evan.libraries.kafka.support.KafkaTestCaseSupport;
 
 /**
  * @author Evan.Shen
- * @since 2019-08-22
+ * @since 2019-11-04
  */
-@SpringBootApplication
-@ComponentScan(basePackages = {
-        "test.org.evan.libraries.kafka.support.config",
-        "test.org.evan.libraries.kafka.support.producer",
-})
-public class ProducerTest {
-    public static void main(String[] args) {
-        SpringApplication.run(ProducerTest.class, args);
+public class ProducerTest extends KafkaTestCaseSupport {
+
+    @Test
+    public void testSend() {
+        String url = getFullApiUri("/send?count=10000");
+
+        for (int i = 0; i < 10; i++) {
+            String result = restTemplate.postForObject(url, null, String.class);
+            LOGGER.info("========>>：" + result);
+        }
     }
 }

@@ -1,7 +1,7 @@
-package test.org.evan.libraries.kafka.support.producer;
+package test.org.evan.libraries.kafka.consumer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,17 +22,15 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 @Component
 @Slf4j
-public class ProducerDataStater {
+public class ConsumerDataStater {
     //private BlockingQueue<MessageExt> consumerDataTmpStore = new LinkedBlockingDeque<>(5120);
-    private BlockingQueue<String> producerSuccessStore = new LinkedBlockingDeque<>(2048);
-    private ConcurrentHashMap<String, Integer> producerSuccessStatResult = new ConcurrentHashMap<>();
+    private BlockingQueue<ConsumerRecord<?, ?>> consumerDataCountTmpStore = new LinkedBlockingDeque<>(1024);
+    private ConcurrentHashMap<String, Integer> consumerDataStatResult = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Integer> duplicateCheckResult = new ConcurrentHashMap<>(128);
 
-    private BlockingQueue<String> producerFailStore = new LinkedBlockingDeque<>(256);
-    private ConcurrentHashMap<String, Integer> producerFailStatResult = new ConcurrentHashMap<>();
-
-    private Thread statSuccessThread;
-    private Thread statFailThread;
+    private Thread statThread;
     private Thread statDataPrintThread;
+    private Thread duplicateCheckThread;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -48,76 +47,92 @@ public class ProducerDataStater {
         hashOperations = redisTemplate.opsForHash();
         operationsDuplicate = redisTemplate.opsForList();
 
-        statDataPrintThread = new Thread(new StatDataPrinter(producerSuccessStatResult, producerFailStatResult));
+        statDataPrintThread = new Thread(new StatDataPrinter(consumerDataStatResult, duplicateCheckResult));
         statDataPrintThread.start();
 
-        statSuccessThread = new Thread(new StatRunnable(producerSuccessStore, producerSuccessStatResult));
-        statSuccessThread.start();
-
-        statFailThread = new Thread(new StatRunnable(producerFailStore, producerFailStatResult));
-        statFailThread.start();
+        statThread = new Thread(new StatRunnable(consumerDataCountTmpStore, consumerDataStatResult));
+        statThread.start();
     }
 
     @PreDestroy
     public void destroy() {
-        statSuccessThread.interrupt();
-        statFailThread.interrupt();
+        statThread.interrupt();
         statDataPrintThread.interrupt();
     }
 
-    public void statSuccess(RecordMetadata recordMetadata) {
-        try {
-            producerSuccessStore.put(recordMetadata.topic());
-        } catch (InterruptedException e) {
-            log.warn(e.getMessage(), e);
-        }
-    }
+    public void stat(ConsumerRecord<?, ?> record) {
+        String key = record.key() + "";
 
-    public void statFail(String topic) {
         try {
-            producerFailStore.put(topic);
+            Thread.sleep(1); //模拟处理需要的时间
         } catch (InterruptedException e) {
             log.warn(e.getMessage(), e);
         }
+
+        Map<String, Object> map = new HashMap();
+        map.put("topic", record.topic());
+        map.put("partition", record.partition());
+        map.put("key", key);
+        map.put("value", record.value());
+        map.put("offset",record.offset());
+
+        listOperations.rightPush("receive_total", map);
+        listOperations.rightPush("receive_" + record.topic(), map);
+
+//        if (hashOperations.hasKey("total_no_duplicate", record.key())) {
+//            operationsDuplicate.rightPush("duplicate", map);
+//        } else {
+//            hashOperations.put("total_no_duplicate", record.key() + "", map);
+//            //hashOperations.put("total_no_duplicate_byid", demo.getId() + "", map);
+//        }
+
+        //hashOperations.put(key, record.key() + "", map);
+        try {
+            consumerDataCountTmpStore.put(record);
+        } catch (InterruptedException e) {
+            log.warn(e.getMessage(), e);
+        }
+
     }
 }
 
 @Slf4j
 class StatRunnable implements Runnable {
-    private BlockingQueue<String> producerStore;
-    private ConcurrentHashMap<String, Integer> producerStatResult;
+    private BlockingQueue<ConsumerRecord<?, ?>> consumerDataCountTmpStore;
+    private ConcurrentHashMap<String, Integer> consumerDataStatResult;
 
 
-    public StatRunnable(BlockingQueue<String> producerStore, ConcurrentHashMap<String, Integer> producerStatResult) {
-        this.producerStore = producerStore;
-        this.producerStatResult = producerStatResult;
+    public StatRunnable(BlockingQueue<ConsumerRecord<?, ?>> consumerDataCountTmpStore, ConcurrentHashMap<String, Integer> consumerDataStatResult) {
+        this.consumerDataCountTmpStore = consumerDataCountTmpStore;
+        this.consumerDataStatResult = consumerDataStatResult;
     }
 
     @Override
     public void run() {
         while (true) {
-            String topic = null;
+            ConsumerRecord<?, ?> o = null;
 
             try {
-                topic = producerStore.take();
+                o = consumerDataCountTmpStore.take();
             } catch (InterruptedException e) {
 //                log.warn(e.getMessage(), e);
             }
 
-            if (topic != null) {
-                stat(topic);
-                producerStore.remove(topic);
+            if (o != null) {
+                stat(o.topic());
+                // stat(o.topic() + "__" + o.partition());
+                consumerDataCountTmpStore.remove(o);
             }
         }
     }
 
     private void stat(String key) {
-        Integer count = producerStatResult.get(key);
+        Integer count = consumerDataStatResult.get(key);
         if (count == null) {
             count = 0;
         }
         count++;
-        producerStatResult.put(key, count);
+        consumerDataStatResult.put(key, count);
     }
 }
 
@@ -166,15 +181,15 @@ class StatDataPrinter implements Runnable {
 //@Slf4j
 //class DuplicateChecker implements Runnable {
 //    private RedisTemplate redisTemplate;
-//    private ConcurrentHashMap<String, Integer> producerFailStatResult;
+//    private ConcurrentHashMap<String, Integer> duplicateCheckResult;
 //
 //    private Set<String> duplicateCheckSet = new HashSet<>(10240);
 //
 //    private BoundHashOperations<String, String, Demo> boundHashOperations;
 //
-//    public DuplicateChecker(RedisTemplate redisTemplate, ConcurrentHashMap<String, Integer> producerFailStatResult) {
+//    public DuplicateChecker(RedisTemplate redisTemplate, ConcurrentHashMap<String, Integer> duplicateCheckResult) {
 //        this.redisTemplate = redisTemplate;
-//        this.producerFailStatResult = producerFailStatResult;
+//        this.duplicateCheckResult = duplicateCheckResult;
 //
 //        boundHashOperations = redisTemplate.boundHashOps("rocketMsg");
 //    }
@@ -198,7 +213,7 @@ class StatDataPrinter implements Runnable {
 ////                String key = demo.getId() + "";
 ////
 ////                if (duplicateCheckSet.contains(key)) {
-////                    producerFailStatResult.put(key, 2);
+////                    duplicateCheckResult.put(key, 2);
 ////                } else {
 ////                    duplicateCheckSet.add(key);
 ////                }

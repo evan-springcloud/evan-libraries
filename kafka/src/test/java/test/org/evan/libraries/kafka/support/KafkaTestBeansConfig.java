@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {
         "test.org.evan.libraries.kafka.support.config",
-        "test.org.evan.libraries.kafka.support.producer",
+        "test.org.evan.libraries.kafka.producer",
 })
 public class KafkaTestBeansConfig {
 }

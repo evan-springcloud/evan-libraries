@@ -1,4 +1,4 @@
-package test.org.evan.libraries.kafka.support.producer;
+package test.org.evan.libraries.kafka.producer;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import test.org.evan.libraries.kafka.support.consumer.ConsumerDataStater;
 import test.org.evan.libraries.kafka.support.model.Demo;
 import test.org.evan.libraries.kafka.support.model.SexEnum;
 
@@ -92,7 +91,7 @@ public class ProducerController {
             }
 
             //int topicNo = i % 2;
-            int topicNo = 0;
+            int topicNo = 1;
 
             String topic = "test_topic_" + topicNo;
 

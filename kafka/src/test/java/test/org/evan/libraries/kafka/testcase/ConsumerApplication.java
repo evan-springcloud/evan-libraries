@@ -11,10 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "test.org.evan.libraries.kafka.support.config",
-        "test.org.evan.libraries.kafka.support.consumer",
+        "test.org.evan.libraries.kafka.consumer",
 })
-public class ConsumerTest {
+public class ConsumerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerTest.class, args);
+        SpringApplication.run(ConsumerApplication.class, args);
     }
 }
