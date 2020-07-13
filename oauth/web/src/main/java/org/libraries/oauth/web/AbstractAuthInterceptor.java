@@ -1,6 +1,5 @@
 package org.libraries.oauth.web;
 
-import org.evan.libraries.utils.Excludor;
 import org.evan.libraries.utils.PathUtil;
 import org.evan.libraries.utils.StringUtil;
 import org.libraries.oauth.model.LoginAccount;
@@ -46,31 +45,23 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     private Map<Method, Set<String>> caches = new ConcurrentHashMap<>();
 
-    private Excludor excludor;
+    private Set<String> notRequiredLoginPath;
     private UrlPathHelper urlPathHelper;
     private String defaultToken;
     private String defaultTokenSecret;
     private AbstractLoginAccountSession LoginAccountSession;
 
     public void init() {
-        if (excludor == null) {
-            excludor = new Excludor();
-        }
-
         if (urlPathHelper == null) {
             urlPathHelper = new UrlPathHelper();
         }
 
-        LOGGER.info(">>>> AuthInterceptor Inited, AuthInterceptor class[{}], {}", this.getClass(), excludor);
+        LOGGER.info(">>>> AuthInterceptor Inited, AuthInterceptor class[{}], {}", this.getClass(), notRequiredLoginPath);
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestPath = urlPathHelper.getPathWithinApplication(request);
-        if (PathUtil.matches(requestPath, excludor.getExcludes())) {
-            return true;
-        }
-
 
         if (!HandlerMethod.class.isInstance(handler)) { //只要不是HandlerMethod，都认为是404
             //LOGGER.warn(">>>> URI[{}],{} is not execute instance of HandlerMethod,", requestPath, handler);
@@ -89,6 +80,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     /**
      * 默认验证逻辑，子类可重写
+     *
      * @param request
      * @param method
      */
@@ -108,22 +100,22 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
             if (StringUtil.equals(token, defaultToken)) {
                 tokenSecret = defaultTokenSecret;
-                LoginAccountSetter.remove();
             } else {
                 LoginAccount loginAccount = LoginAccountSession.get(request);
 
-                if (loginAccount == null) {
+                if (loginAccount != null) {
+                    tokenSecret = loginAccount.getTokenSecret();
+                    LoginAccountSetter.put(loginAccount);
+                } else if (PathUtil.matches(requestPath, notRequiredLoginPath)) { //当前请求不是不需要登录的地址
+                    //TODO 当前请求不需要登录，但传入了非默认TOKEN
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(">>>> 当前请求无需登录，但传入了非默认TOKEN, [{}], method [{}]", requestPath, method);
+                    }
+                } else {
                     LOGGER.warn(">>>> No login in request [{}], method [{}]", requestPath, method);
                     throw new NoLoginException();
-                } else {
-                    tokenSecret = loginAccount.getTokenSecret();
-
-                    if (loginAccount != null) {
-                        LoginAccountSetter.put(loginAccount);
-                    }
                 }
             }
-
             //TODO 验证签名
         }
     }
@@ -212,10 +204,6 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
         }
     }
 
-    public void setExcludor(Excludor excludor) {
-        this.excludor = excludor;
-    }
-
     public void setUrlPathHelper(UrlPathHelper urlPathHelper) {
         this.urlPathHelper = urlPathHelper;
     }
@@ -233,5 +221,10 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     /***/
     public void setLoginAccountSession(AbstractLoginAccountSession loginAccountSession) {
         LoginAccountSession = loginAccountSession;
+    }
+
+    /***/
+    public void setNotRequiredLoginPath(Set<String> notRequiredLoginPath) {
+        this.notRequiredLoginPath = notRequiredLoginPath;
     }
 }

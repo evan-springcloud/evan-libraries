@@ -10,7 +10,9 @@
 - web web服务端
 
 ## 1.4
-1、HttpUtil增加获取客户端设备相关的方法
+1. HttpUtil增加获取客户端设备相关的方法
+1. 增加获取当前会话的Filter
+1. `AbstractAuthInterceptor`增加不需要登录的url的排除
 
 ## 1.3.3
 1、fix 修复HttpUtil获取remoteAddr问题。由于多次反向代理后会有多个ip值，第一个ip才是真实ip，修复之后只返回第一个
