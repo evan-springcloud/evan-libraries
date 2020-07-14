@@ -38,17 +38,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAuthInterceptor.class);
 
-    /**
-     * 没有配置权限控制注解的Methed缓存
-     */
-    private Set<Method> noAuthCaches = Collections.synchronizedSet(new HashSet<Method>());
+    private Set<Method> notRequiredLoginMethodCache = Collections.synchronizedSet(new HashSet<Method>());
 
-    private Map<Method, Set<String>> caches = new ConcurrentHashMap<>();
+    private Set<Method> noAuthCache = Collections.synchronizedSet(new HashSet<Method>());
+
+    private Map<Method, Set<String>> methodFunctionCache = new ConcurrentHashMap<>();
 
     private Set<String> notRequiredLoginPath;
+
     private UrlPathHelper urlPathHelper;
+
     private String defaultToken;
+
     private String defaultTokenSecret;
+
     private AbstractLoginAccountSession LoginAccountSession;
 
     public void init() {
@@ -107,17 +110,39 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
                     tokenSecret = loginAccount.getTokenSecret();
                     LoginAccountSetter.put(loginAccount);
                 } else if (PathUtil.matches(requestPath, notRequiredLoginPath)) { //当前请求不是不需要登录的地址
-                    //TODO 当前请求不需要登录，但传入了非默认TOKEN
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(">>>> 当前请求无需登录，但传入了非默认TOKEN, [{}], method [{}]", requestPath, method);
-                    }
+                    doNotDefaultTokenAndNoLogin(method, requestPath);
+                } else if (notRequiredLoginMethodCache.contains(method)) {
+                    doNotDefaultTokenAndNoLogin(method, requestPath);
+                } else if (AnnotationUtils.getAnnotation(method, IgnoreLoginAuth.class) != null) {
+                    doNotDefaultTokenAndNoLogin(method, requestPath);
+                    notRequiredLoginMethodCache.add(method);
                 } else {
                     LOGGER.warn(">>>> No login in request [{}], method [{}]", requestPath, method);
                     throw new NoLoginException();
                 }
             }
-            //TODO 验证签名
         }
+        //TODO 验证签名
+    }
+
+    /**
+     * 处理当前请求不需要登录，但传入了非默认TOKEN，并且会话不存在的情况
+     * @param method
+     * @param requestPath
+     */
+    private void doNotDefaultTokenAndNoLogin(Method method, String requestPath) {
+        //TODO 当前请求不需要登录，但传入了非默认TOKEN，并且会话不存在的情况
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(">>>> 当前请求无需登录，但传入了非默认TOKEN, [{}], method [{}]", requestPath, method);
+        }
+    }
+
+    /**
+     * @param requestPath
+     * @param method
+     */
+    protected void validateLoginUser(String requestPath, Method method) {
+
     }
 
     @Override
@@ -141,20 +166,20 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     private Set<String> getAllowFunctions(Method handlerMethod) {
         Set<String> functions = null;
 
-        if (noAuthCaches.contains(handlerMethod)) { // 该method在不需要权限控制的methed缓存中，则不需判断
+        if (noAuthCache.contains(handlerMethod)) { // 该method在不需要权限控制的methed缓存中，则不需判断
             return functions;
         }
 
-        functions = this.caches.get(handlerMethod);
+        functions = this.methodFunctionCache.get(handlerMethod);
         if (functions == null) {
             functions = getDefindFunctions(handlerMethod);
             // 没有配置@UserAuthority
             if (functions.size() == 0) {
                 // 该方法或类没有配置UserAuthority,将handlerMethod加入noControlCaches缓存
-                noAuthCaches.add(handlerMethod);
+                noAuthCache.add(handlerMethod);
             } else {
                 // 配置了@UserAuthority，将配置的的权限加入缓存
-                this.caches.put(handlerMethod, functions);
+                this.methodFunctionCache.put(handlerMethod, functions);
             }
         }
 

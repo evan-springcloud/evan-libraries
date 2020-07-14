@@ -13,4 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractLoginAccountSession<T extends LoginAccount> {
     public abstract T get(HttpServletRequest request);
+
+    public abstract String getTokenSecret(String token);
 }
