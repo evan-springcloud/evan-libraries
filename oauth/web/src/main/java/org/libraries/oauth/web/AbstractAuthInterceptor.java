@@ -52,7 +52,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     private String defaultTokenSecret;
 
-    private AbstractLoginAccountSession LoginAccountSession;
+    private AbstractLoginAccountSession loginAccountSession;
 
     public void init() {
         if (urlPathHelper == null) {
@@ -101,32 +101,47 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
             String tokenSecret = null;
 
-            if (StringUtil.equals(token, defaultToken)) {
-                tokenSecret = defaultTokenSecret;
+            if (isNotRequiredLogin(method, requestPath)) { //当前请求不需要登录
+                if (StringUtil.equals(token, defaultToken)) { //
+                    tokenSecret = defaultTokenSecret;
+                }else{
+                    tokenSecret = loginAccountSession.getTokenSecret(token);
+                }
             } else {
-                LoginAccount loginAccount = LoginAccountSession.get(request);
+                if (StringUtil.equals(token, defaultToken)) {
+                    LOGGER.warn(">>>>  当前请求必须登录，但是传入了默认token, request [{}], method [{}]",  requestPath, method);
+                    throw new NoLoginException();
+                }
 
-                if (loginAccount != null) {
-                    tokenSecret = loginAccount.getTokenSecret();
-                    LoginAccountSetter.put(loginAccount);
-                } else if (PathUtil.matches(requestPath, notRequiredLoginPath)) { //当前请求不是不需要登录的地址
-                    doNotDefaultTokenAndNoLogin(method, requestPath);
-                } else if (notRequiredLoginMethodCache.contains(method)) {
-                    doNotDefaultTokenAndNoLogin(method, requestPath);
-                } else if (AnnotationUtils.getAnnotation(method, IgnoreLoginAuth.class) != null) {
-                    doNotDefaultTokenAndNoLogin(method, requestPath);
-                    notRequiredLoginMethodCache.add(method);
-                } else {
+                LoginAccount loginAccount = loginAccountSession.get(request);
+                if (loginAccount == null) {
                     LOGGER.warn(">>>> No login in request [{}], method [{}]", requestPath, method);
                     throw new NoLoginException();
                 }
+                LoginAccountSetter.put(loginAccount);
             }
         }
         //TODO 验证签名
     }
 
+    private boolean isNotRequiredLogin(Method method, String requestPath) {
+        if (notRequiredLoginMethodCache.contains(method)) {
+            return true;
+        }
+        if (PathUtil.matches(requestPath, notRequiredLoginPath)) {
+            notRequiredLoginMethodCache.add(method);
+            return true;
+        }
+        if (AnnotationUtils.getAnnotation(method, IgnoreLoginAuth.class) != null) {
+            notRequiredLoginMethodCache.add(method);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 处理当前请求不需要登录，但传入了非默认TOKEN，并且会话不存在的情况
+     *
      * @param method
      * @param requestPath
      */
@@ -135,14 +150,6 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(">>>> 当前请求无需登录，但传入了非默认TOKEN, [{}], method [{}]", requestPath, method);
         }
-    }
-
-    /**
-     * @param requestPath
-     * @param method
-     */
-    protected void validateLoginUser(String requestPath, Method method) {
-
     }
 
     @Override
@@ -245,7 +252,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     /***/
     public void setLoginAccountSession(AbstractLoginAccountSession loginAccountSession) {
-        LoginAccountSession = loginAccountSession;
+        this.loginAccountSession = loginAccountSession;
     }
 
     /***/

@@ -29,7 +29,6 @@ public class LoginAccountFilter implements Filter {
 
     private Set<String> excludes = new HashSet<>();
     private String defaultToken;
-    private String defaultTokenSecret;
     private AbstractLoginAccountSession loginAccountSession;
 
     @Override
@@ -57,15 +56,18 @@ public class LoginAccountFilter implements Filter {
                 if (loginAccount != null) {
                     LoginAccountSetter.put(loginAccount);
                 }
+            } else {
+                LoginAccountSetter.remove();
             }
         }
 
         chain.doFilter(servletRequest, response);
+
+        LoginAccountSetter.remove();
     }
 
     @Override
     public void destroy() {
-
     }
 
     /***/
@@ -82,5 +84,10 @@ public class LoginAccountFilter implements Filter {
     /***/
     public void setUrlPathHelper(UrlPathHelper urlPathHelper) {
         this.urlPathHelper = urlPathHelper;
+    }
+
+    /***/
+    public void setDefaultToken(String defaultToken) {
+        this.defaultToken = defaultToken;
     }
 }
