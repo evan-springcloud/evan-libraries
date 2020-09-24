@@ -40,7 +40,9 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     private Set<Method> notRequiredLoginMethodCache = Collections.synchronizedSet(new HashSet<Method>());
 
-    private Set<Method> noAuthCache = Collections.synchronizedSet(new HashSet<Method>());
+    private Set<Method> notRequiredTokenMethodCache = Collections.synchronizedSet(new HashSet<Method>());
+
+    private Set<Method> notPermissionMethodCache = Collections.synchronizedSet(new HashSet<Method>());
 
     private Map<Method, Set<String>> methodFunctionCache = new ConcurrentHashMap<>();
 
@@ -76,7 +78,9 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
 
-        validate(request, method);
+        if (!isNotRequiredToken(method)) {
+            validate(request, method);
+        }
 
         return true;
     }
@@ -104,12 +108,12 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
             if (isNotRequiredLogin(method, requestPath)) { //当前请求不需要登录
                 if (StringUtil.equals(token, defaultToken)) { //
                     tokenSecret = defaultTokenSecret;
-                }else{
+                } else {
                     tokenSecret = loginAccountSession.getTokenSecret(token);
                 }
             } else {
                 if (StringUtil.equals(token, defaultToken)) {
-                    LOGGER.warn(">>>>  当前请求必须登录，但是传入了默认token, request [{}], method [{}]",  requestPath, method);
+                    LOGGER.warn(">>>>  当前请求必须登录，但是传入了默认token, request [{}], method [{}]", requestPath, method);
                     throw new NoLoginException();
                 }
 
@@ -124,6 +128,34 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
         //TODO 验证签名
     }
 
+    /**
+     * 是否需要验证token
+     *
+     * @param method
+     * @return
+     */
+    private boolean isNotRequiredToken(Method method) {
+        if (notRequiredTokenMethodCache.contains(method)) {
+            return true;
+        }
+        if (AnnotationUtils.getAnnotation(method, IgnoreTokenAuth.class) != null) {
+            notRequiredTokenMethodCache.add(method);
+            return true;
+        }
+        if (AnnotationUtils.getAnnotation(method.getDeclaringClass(), IgnoreTokenAuth.class) != null) {
+            notRequiredTokenMethodCache.add(method);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 是否需要登录
+     *
+     * @param method
+     * @param requestPath
+     * @return
+     */
     private boolean isNotRequiredLogin(Method method, String requestPath) {
         if (notRequiredLoginMethodCache.contains(method)) {
             return true;
@@ -133,6 +165,10 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
             return true;
         }
         if (AnnotationUtils.getAnnotation(method, IgnoreLoginAuth.class) != null) {
+            notRequiredLoginMethodCache.add(method);
+            return true;
+        }
+        if (AnnotationUtils.getAnnotation(method.getDeclaringClass(), IgnoreLoginAuth.class) != null) {
             notRequiredLoginMethodCache.add(method);
             return true;
         }
@@ -173,19 +209,19 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     private Set<String> getAllowFunctions(Method handlerMethod) {
         Set<String> functions = null;
 
-        if (noAuthCache.contains(handlerMethod)) { // 该method在不需要权限控制的methed缓存中，则不需判断
+        if (notPermissionMethodCache.contains(handlerMethod)) { // 该method在不需要权限控制的methed缓存中，则不需判断
             return functions;
         }
 
         functions = this.methodFunctionCache.get(handlerMethod);
         if (functions == null) {
             functions = getDefindFunctions(handlerMethod);
-            // 没有配置@UserAuthority
+            // 没有配置@AccountPermission
             if (functions.size() == 0) {
                 // 该方法或类没有配置UserAuthority,将handlerMethod加入noControlCaches缓存
-                noAuthCache.add(handlerMethod);
+                notPermissionMethodCache.add(handlerMethod);
             } else {
-                // 配置了@UserAuthority，将配置的的权限加入缓存
+                // 配置了@AccountPermission，将配置的的权限加入缓存
                 this.methodFunctionCache.put(handlerMethod, functions);
             }
         }
@@ -203,17 +239,17 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
      * @return
      */
     private Set<String> getDefindFunctions(Method handlerMethod) {
-        LoginAccountAuthority auth1 = null, auth2 = null;
+        AccountPermission auth1 = null, auth2 = null;
         Set<String> defindFunctions = new HashSet<String>();
 
-        // 取method上的@UserAuthority
-        auth1 = AnnotationUtils.getAnnotation(handlerMethod, LoginAccountAuthority.class);
+        // 取method上的@AccountPermission
+        auth1 = AnnotationUtils.getAnnotation(handlerMethod, AccountPermission.class);
         addFunToSet(auth1, defindFunctions);
 
-        // 取method上没有配置@UserAuthority
+        // 取method上没有配置@AccountPermission
         if (defindFunctions.isEmpty()) {
-            // 取class上的@UserAuthority
-            auth2 = AnnotationUtils.getAnnotation(handlerMethod.getDeclaringClass(), LoginAccountAuthority.class);
+            // 取class上的@AccountPermission
+            auth2 = AnnotationUtils.getAnnotation(handlerMethod.getDeclaringClass(), AccountPermission.class);
             addFunToSet(auth2, defindFunctions);
         }
 
@@ -228,7 +264,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
      * @param auth
      * @param defindFunctions
      */
-    private void addFunToSet(LoginAccountAuthority auth, Set<String> defindFunctions) {
+    private void addFunToSet(AccountPermission auth, Set<String> defindFunctions) {
         if (auth != null && auth.value() != null && auth.value().length > 0) {
             for (String s : auth.value()) {
                 defindFunctions.add(s);

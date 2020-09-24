@@ -9,6 +9,9 @@
 - utils 
 - web web服务端
 
+## 1.4.1
+1. `AbstractAuthInterceptor`增加不需要token的排除功能
+
 ## 1.4
 1. HttpUtil增加获取客户端设备相关的方法
 1. 增加获取当前会话的Filter
