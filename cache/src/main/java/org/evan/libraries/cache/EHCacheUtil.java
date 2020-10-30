@@ -8,6 +8,7 @@ import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import java.io.Serializable;
 
@@ -29,9 +30,11 @@ public class EHCacheUtil {
      * @param conf         maxEntriesLocalHeap默认5000，timeToIdleSeconds默认20，timeToLiveSeconds默认20
      */
     public EHCacheUtil(CacheManager cacheManager, CacheConfiguration conf) {
-        if (conf.getName() == null || "".equals(conf.getName().trim())) {
-            throw new IllegalArgumentException("EHCache name can not empty!");
-        }
+        Assert.hasText(conf.getName(),"EHCache name can not empty!");
+
+//        if (conf.getName() == null || "".equals(conf.getName().trim())) {
+//            throw new IllegalArgumentException();
+//        }
 
         this.cacheName = conf.getName();
         if (conf.getMaxEntriesLocalHeap() == 0) {
