@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import static org.evan.libraries.model.result.OperateResult.DEFAULT_CODE;
+import static org.evan.libraries.model.result.OperateResult.DEFAULT_MSG;
 
 /**
  * Restful列表（非分页）接口输出格式封装
@@ -17,7 +18,7 @@ public class RestListResponse<T> implements Serializable {
     private static final long serialVersionUID = 2941991018140190488L;
 
     private String code = DEFAULT_CODE;
-    private String msg = DEFAULT_CODE;
+    private String msg = DEFAULT_MSG;
     private List<T> data;
 
     public RestListResponse() {
