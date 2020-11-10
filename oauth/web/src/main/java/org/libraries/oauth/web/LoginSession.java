@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author shen.wei
  * @version %I%, %G%
  */
-public abstract class AbstractLoginAccountSession<T extends LoginAccount> {
-    public abstract T get(HttpServletRequest request);
+public  interface LoginSession<T extends LoginAccount> {
+    T get(HttpServletRequest request);
 
-    public abstract String getTokenSecret(String token);
+    String getTokenSecret(String token);
 }

@@ -54,7 +54,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     private String defaultTokenSecret;
 
-    private AbstractLoginAccountSession loginAccountSession;
+    private LoginSession loginAccountSession;
 
     public void init() {
         if (urlPathHelper == null) {
@@ -287,7 +287,7 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     }
 
     /***/
-    public void setLoginAccountSession(AbstractLoginAccountSession loginAccountSession) {
+    public void setLoginAccountSession(LoginSession loginAccountSession) {
         this.loginAccountSession = loginAccountSession;
     }
 

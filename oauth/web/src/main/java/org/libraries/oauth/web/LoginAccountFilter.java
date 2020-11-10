@@ -29,7 +29,7 @@ public class LoginAccountFilter implements Filter {
 
     private Set<String> excludes = new HashSet<>();
     private String defaultToken;
-    private AbstractLoginAccountSession loginAccountSession;
+    private LoginSession loginAccountSession;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -77,7 +77,7 @@ public class LoginAccountFilter implements Filter {
     }
 
     /***/
-    public void setLoginAccountSession(AbstractLoginAccountSession loginAccountSession) {
+    public void setLoginAccountSession(LoginSession loginAccountSession) {
         this.loginAccountSession = loginAccountSession;
     }
 
