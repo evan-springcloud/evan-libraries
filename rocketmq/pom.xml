@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.evan.libraries</groupId>
         <artifactId>evan-libraries</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.5.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>evan-libraries-rocketmq</artifactId>

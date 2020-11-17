@@ -9,6 +9,12 @@
 - utils 
 - web web服务端
 
+## 1.5.1
+1. 新增通用分页查询DTO `SimplePageQueryDTO`
+
+## 1.5
+1. 支持非Web工程可以读写session
+
 ## 1.4.1
 1. `AbstractAuthInterceptor`增加不需要token的排除功能
 

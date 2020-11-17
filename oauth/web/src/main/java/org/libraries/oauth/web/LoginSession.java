@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author shen.wei
  * @version %I%, %G%
+ * @since 1.5
  */
 public  interface LoginSession<T extends LoginAccount> {
     T get(HttpServletRequest request);

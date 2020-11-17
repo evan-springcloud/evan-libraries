@@ -33,16 +33,15 @@ public class PageResult<T> implements Serializable {
         this.query = query;
     }
 
-//    public static <T> PageResult<T> create(QueryParam query) {
-//        PageResult<T> result = new PageResult<>(query);
-//        return result;
-//    }
-
     public static <T> PageResult<T> create(QueryParam query, List<T> data, long recordCount) {
         PageResult<T> result = new PageResult<>(query);
         result.setData(data);
         result.setRecordCount(recordCount);
         return result;
+    }
+
+    public static <T> PageResult<T> create(List<T> data, long recordCount) {
+        return create(null, data, recordCount);
     }
 
     /**

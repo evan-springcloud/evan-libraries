@@ -18,6 +18,14 @@ public abstract class AbstractQueryParam implements Serializable, QueryParam {
     private boolean includeDeleted;
     private Serializable offset; //列表上一页最后一条记录的排序索引值
 
+    public AbstractQueryParam() {
+    }
+
+    public AbstractQueryParam(SimplePageQueryDTO simplePageQueryDTO) {
+        this.pageNo = simplePageQueryDTO.getPageNo();
+        this.pageSize = simplePageQueryDTO.getPageSize();
+    }
+
     /**
      * 排序表达式
      */
