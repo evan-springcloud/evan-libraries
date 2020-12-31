@@ -1,4 +1,4 @@
-package org.libraries.oauth.model;
+package org.evan.libraries.oauth.model;
 
 
 import java.util.Date;

@@ -9,6 +9,9 @@
 - utils 
 - web web服务端
 
+## 1.5.2
+1. Fix  oauth模块中报名`org.libraries`错误，改为`org.libraries`
+
 ## 1.5.1
 1. 新增通用分页查询DTO `SimplePageQueryDTO`
 

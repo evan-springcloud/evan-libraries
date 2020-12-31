@@ -1,7 +1,7 @@
 package org.evan.libraries.web.client;
 
-import org.libraries.oauth.model.LoginAccount;
-import org.libraries.oauth.model.LoginAccountContext;
+import org.evan.libraries.oauth.model.LoginAccount;
+import org.evan.libraries.oauth.model.LoginAccountContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
