@@ -1,9 +1,10 @@
 package org.evan.libraries.oauth.web;
 
-import org.evan.libraries.utils.PathUtil;
-import org.evan.libraries.utils.StringUtil;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.evan.libraries.oauth.model.LoginAccount;
 import org.evan.libraries.oauth.model.LoginAccountSetter;
+import org.evan.libraries.utils.PathUtil;
+import org.evan.libraries.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -54,7 +55,12 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
     private String defaultTokenSecret;
 
+    private String innerRequestTagHeaderName = "Inner_Request";
+
+    private String innerRequestTagHeaderValue = "org.evan.libraries.oauth";
+
     private LoginSession loginAccountSession;
+
 
     public void init() {
         if (urlPathHelper == null) {
@@ -105,8 +111,12 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
 
             String tokenSecret = null;
 
-            if (isNotRequiredLogin(method, requestPath)) { //当前请求不需要登录
-                if (StringUtil.equals(token, defaultToken)) { //
+            String headerValue = request.getHeader(innerRequestTagHeaderName);
+
+            if (StringUtil.equalsIgnoreCase(innerRequestTagHeaderValue, headerValue) //当前请求为内部请求
+                    || isNotRequiredLogin(method, requestPath))  //当前请求不需要登录
+            {
+                if (StringUtil.equals(token, defaultToken)) {
                     tokenSecret = defaultTokenSecret;
                 } else {
                     tokenSecret = loginAccountSession.getTokenSecret(token);
@@ -294,5 +304,15 @@ public abstract class AbstractAuthInterceptor implements HandlerInterceptor {
     /***/
     public void setNotRequiredLoginPath(Set<String> notRequiredLoginPath) {
         this.notRequiredLoginPath = notRequiredLoginPath;
+    }
+
+    /***/
+    public void setInnerRequestTagHeaderName(String innerRequestTagHeaderName) {
+        this.innerRequestTagHeaderName = innerRequestTagHeaderName;
+    }
+
+    /***/
+    public void setInnerRequestTagHeaderValue(String innerRequestTagHeaderValue) {
+        this.innerRequestTagHeaderValue = innerRequestTagHeaderValue;
     }
 }
