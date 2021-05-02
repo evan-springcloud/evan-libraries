@@ -11,7 +11,7 @@
 
     <groupId>org.evan.libraries</groupId>
     <artifactId>evan-libraries</artifactId>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -31,24 +31,23 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.7</jdk.version>
-        <commons-lang.version>3.8.1</commons-lang.version>
-        <springboot.version>2.1.6.RELEASE</springboot.version>
-        <commons-codec.version>1.10</commons-codec.version>
+        <commons-lang.version>3.12.0</commons-lang.version>
+        <springboot.version>2.3.10.RELEASE</springboot.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <commons-pool.version>1.6</commons-pool.version>
-        <commons-io.version>2.5</commons-io.version>
-        <commons-lang.version>3.5</commons-lang.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <logback.version>1.2.2</logback.version>
+        <commons-io.version>2.8.0</commons-io.version>
+         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <spring.version>5.2.14.RELEASE</spring.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
-        <mybatis.version>3.4.4</mybatis.version>
-        <pagehelper.version>5.1.10</pagehelper.version>
-        <mysql.version>5.1.41</mysql.version>
-        <druid.version>1.1.20</druid.version>
+        <mybatis.version>3.5.7</mybatis.version>
+        <pagehelper.version>5.1.11</pagehelper.version>
+        <mysql.version>8.0.24</mysql.version>
+        <druid.version>1.2.6</druid.version>
         <sessionRedis.version>1.2.2.RELEASE</sessionRedis.version>
-        <fastjson.version>1.2.17</fastjson.version>
-        <mybatis-spring.version>1.3.1</mybatis-spring.version>
+        <fastjson.version>1.2.76</fastjson.version>
+        <mybatis-spring.version>2.0.6</mybatis-spring.version>
     </properties>
 
     <dependencyManagement>
@@ -156,14 +155,14 @@
     </repositories>
 
     <distributionManagement>
-<!--        <repository>-->
-<!--            <id>releases</id>-->
-<!--            <url>http://116.62.106.105:8081/nexus/content/repositories/releases</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>snapshots</id>-->
-<!--            <url>http://116.62.106.105:8081/nexus/content/repositories/snapshots</url>-->
-<!--        </snapshotRepository>-->
+        <!--        <repository>-->
+        <!--            <id>releases</id>-->
+        <!--            <url>http://116.62.106.105:8081/nexus/content/repositories/releases</url>-->
+        <!--        </repository>-->
+        <!--        <snapshotRepository>-->
+        <!--            <id>snapshots</id>-->
+        <!--            <url>http://116.62.106.105:8081/nexus/content/repositories/snapshots</url>-->
+        <!--        </snapshotRepository>-->
         <repository>
             <id>nexus-releases</id>
             <url>http://nexus.shumaidata.com/repository/maven-releases</url>

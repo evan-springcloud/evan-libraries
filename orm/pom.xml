@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.evan.libraries</groupId>
         <artifactId>evan-libraries</artifactId>
-        <version>1.5.2-SNAPSHOT</version>
+        <version>2.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>evan-libraries-orm</artifactId>
@@ -45,12 +45,12 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.5.2</version>
+            <version>${mybatis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>2.0.2</version>
+            <version>${mybatis-spring.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -60,12 +60,12 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.4</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.2.0</version>
+            <version>3.4.2</version>
         </dependency>
 
         <!--test begin -->
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
+            <version>${mysql.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

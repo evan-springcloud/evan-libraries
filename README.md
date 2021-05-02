@@ -9,6 +9,9 @@
 - utils 
 - web web服务端
 
+## 2.0
+1. 依赖全面更新版本
+
 ## 1.5.2
 1. Fix  oauth模块中报名`org.libraries`错误，改为`org.libraries`
 2. SpringCloud的内部请求不验证会话
